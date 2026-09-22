@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BlogSphere | Explore Blogs</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body class="explore-page">
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar explore-navbar">
+
+        <div class="logo-area">
+
+            <div class="logo-icon">
+                ✎
+            </div>
+
+            <div class="logo-text">
+
+                <h2>
+                    Blog<span>Sphere</span>
+                </h2>
+
+                <p>
+                    Share · Inspire · Grow
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="explore.html" class="active">
+                Explore
+            </a>
+
+            <a href="categories.html">
+                Categories
+            </a>
+
+            <a href="about.html">
+                About Us
+            </a>
+
+        </nav>
+
+
+        <div class="nav-actions">
+
+            <button class="search-btn">
+                
+            </button>
+
+            <a href="login.html" class="login-btn">
+                Login
+            </a>
+
+            <a href="register.html" class="register-btn">
+                Register
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= EXPLORE HERO ================= -->
+
+    <section class="explore-hero">
+
+        <div class="explore-hero-content">
+
+            <p class="hero-small">
+                DISCOVER SOMETHING NEW
+            </p>
+
+            <h1>
+                Explore
+                <span>Ideas & Stories.</span>
+            </h1>
+
+            <p>
+                Discover inspiring stories, useful knowledge and
+                fresh perspectives from writers around the world.
+            </p>
+
+
+            <!-- SEARCH -->
+
+            <div class="explore-search">
+
+                <span>
+                   🔎
+                </span>
+
+                <input
+                    type="text"
+                    id="blogSearch"
+                    placeholder="Search blogs, topics or authors..."
+                >
+
+                <button onclick="searchBlogs()">
+                    Search
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= EXPLORE CONTENT ================= -->
+
+    <main class="explore-main">
+
+
+        <!-- CATEGORY FILTER -->
+
+        <section class="filter-section">
+
+            <div class="filter-title">
+
+                <h2>
+                    Browse by Category
+                </h2>
+
+                <p>
+                    Find stories that interest you.
+                </p>
+
+            </div>
+
+
+            <div class="category-filters">
+
+                <button class="filter-btn active"
+                    onclick="filterBlogs('all', this)">
+                    All
+                </button>
+
+                <button class="filter-btn"
+                    onclick="filterBlogs('technology', this)">
+                    Technology
+                </button>
+
+                <button class="filter-btn"
+                    onclick="filterBlogs('programming', this)">
+                    Programming
+                </button>
+
+                <button class="filter-btn"
+                    onclick="filterBlogs('education', this)">
+                    Education
+                </button>
+
+                <button class="filter-btn"
+                    onclick="filterBlogs('travel', this)">
+                    Travel
+                </button>
+
+                <button class="filter-btn"
+                    onclick="filterBlogs('lifestyle', this)">
+                    Lifestyle
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- BLOG HEADER -->
+
+        <div class="explore-heading">
+
+            <div>
+
+                <span class="heading-line"></span>
+
+                <h2>
+                    Latest Stories
+                </h2>
+
+            </div>
+
+            <select id="sortBlogs">
+
+                <option value="latest">
+                    Latest
+                </option>
+
+                <option value="popular">
+                    Most Popular
+                </option>
+
+                <option value="reading">
+                    Quick Reads
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- BLOG GRID -->
+
+        <section class="explore-grid" id="blogGrid">
+
+          <!-- Blogs will be loaded from Spring Boot -->
+
+        </section>
+
+
+        <!-- NO RESULTS -->
+
+        <div id="noResults" class="no-results">
+
+            <div>
+                🔎
+            </div>
+
+            <h3>
+                No stories found
+            </h3>
+
+            <p>
+                Try searching for another topic or category.
+            </p>
+
+        </div>
+
+
+        <!-- PAGINATION -->
+
+        <div class="pagination">
+
+            <button class="page-btn active">
+                1
+            </button>
+
+            <button class="page-btn">
+                2
+            </button>
+
+            <button class="page-btn">
+                3
+            </button>
+
+            <button class="page-btn next">
+                →
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-logo">
+
+            <h2>
+                Blog<span>Sphere</span>
+            </h2>
+
+            <p>
+                Share your story. Inspire the world.
+            </p>
+
+        </div>
+
+
+
+        <p class="copyright">
+            © 2026 BlogSphere. All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+   
+</body>
+
+</html>

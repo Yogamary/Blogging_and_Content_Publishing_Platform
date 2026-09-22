@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BlogSphere | Categories</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body class="categories-page">
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar categories-navbar">
+
+        <div class="logo-area">
+
+            <div class="logo-icon">
+                ✎
+            </div>
+
+            <div class="logo-text">
+
+                <h2>
+                    Blog<span>Sphere</span>
+                </h2>
+
+                <p>
+                    Share · Inspire · Grow
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="explore.html">
+                Explore
+            </a>
+
+            <a href="categories.html" class="active">
+                Categories
+            </a>
+
+            <a href="about.html">
+                About Us
+            </a>
+
+        </nav>
+
+
+        <div class="nav-actions">
+
+            <button class="search-btn">
+                
+            </button>
+
+            <a href="login.html" class="login-btn">
+                Login
+            </a>
+
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= CATEGORY HERO ================= -->
+
+    <main class="categories-main">
+
+        <section class="categories-hero">
+
+            <div class="categories-hero-content">
+
+                <p class="small-heading">
+                    EXPLORE YOUR INTERESTS
+                </p>
+
+                <h1>
+                    Discover a world of
+                    <span>ideas.</span>
+                </h1>
+
+                <p>
+                    Explore stories, knowledge and experiences
+                    from writers across different categories.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CATEGORY SEARCH ================= -->
+
+        <section class="category-search-section">
+
+            <div class="category-search">
+
+                <span>
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    id="categorySearch"
+                    placeholder="Search categories..."
+                    onkeyup="searchCategories()">
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CATEGORIES ================= -->
+
+        <section class="categories-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p>
+                        BROWSE TOPICS
+                    </p>
+
+                    <h2>
+                        Explore Categories
+                    </h2>
+
+                </div>
+
+                <span id="categoryCount">
+                    8 Categories
+                </span>
+
+            </div>
+
+
+            <div
+                class="category-grid"
+                id="categoryGrid">
+
+
+                <!-- TECHNOLOGY -->
+
+                <article
+                    class="category-card"
+                    data-category="technology">
+
+                    <div class="category-card-image category-tech">
+
+                        <div class="category-icon">
+                            💻
+                        </div>
+
+                    </div>
+
+                    <div class="category-card-content">
+
+                        <h3>
+                            Technology
+                        </h3>
+
+                        <p>
+                            Discover the latest ideas,
+                            innovations and digital trends.
+                        </p>
+
+                        <span>
+                            324 Stories →
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PROGRAMMING -->
+
+                <article
+                    class="category-card"
+                    data-category="programming">
+
+                    <div class="category-card-image category-programming">
+
+                        <div class="category-icon">
+                            💻
+                        </div>
+
+                    </div>
+
+                    <div class="category-card-content">
+
+                        <h3>
+                            Programming
+                        </h3>
+
+                        <p>
+                            Learn coding, development,
+                            algorithms and software.
+                        </p>
+
+                        <span>
+                            286 Stories →
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <!-- AI -->
+
+                <article
+                    class="category-card"
+                    data-category="ai">
+
+                    <div class="category-card-image category-ai">
+
+                        <div class="category-icon">
+                            🤖
+                        </div>
+
+                    </div>
+
+                    <div class="category-card-content">
+
+                        <h3>
+                            Artificial Intelligence
+                        </h3>
+
+                        <p>
+                            Explore AI, machine learning,
+                            automation and future technology.
+                        </p>
+
+                        <span>
+                            198 Stories →
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <!-- EDUCATION -->
+
+                <article
+                    class="category-card"
+                    data-category="education">
+
+                    <div class="category-card-image category-education">
+
+                        <div class="category-icon">
+                            🎓
+                        </div>
+
+                    </div>
+
+                    <div class="category-card-content">
+
+                        <h3>
+                            Education
+                        </h3>
+
+                        <p>
+                            Study tips, learning strategies,
+                            careers and student experiences.
+                        </p>
+
+                        <span>
+                            174 Stories →
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <!-- TRAVEL -->
+
+                <article
+                    class="category-card"
+                    data-category="travel">
+
+                    <div class="category-card-image category-travel">
+
+                        <div class="category-icon">
+                            ✈️
+                        </div>
+
+                    </div>
+
+                    <div class="category-card-content">
+
+                        <h3>
+                            Travel
+                        </h3>
+
+                        <p>
+                            Discover places, adventures,
+                            cultures and travel experiences.
+                        </p>
+
+                        <span>
+                            142 Stories →
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <!-- LIFESTYLE -->
+
+                <article
+                    class="category-card"
+                    data-category="lifestyle">
+
+                    <div class="category-card-image category-lifestyle">
+
+                        <div class="category-icon">
+                            🌱
+                        </div>
+
+                    </div>
+
+                    <div class="category-card-content">
+
+                        <h3>
+                            Lifestyle
+                        </h3>
+
+                        <p>
+                            Everyday life, habits, creativity,
+                            wellness and personal growth.
+                        </p>
+
+                        <span>
+                            156 Stories →
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <!-- BUSINESS -->
+
+                <article
+                    class="category-card"
+                    data-category="business">
+
+                    <div class="category-card-image category-business">
+
+                        <div class="category-icon">
+                            📈
+                        </div>
+
+                    </div>
+
+                    <div class="category-card-content">
+
+                        <h3>
+                            Business
+                        </h3>
+
+                        <p>
+                            Entrepreneurship, startups,
+                            finance and professional growth.
+                        </p>
+
+                        <span>
+                            119 Stories →
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <!-- CREATIVITY -->
+
+                <article
+                    class="category-card"
+                    data-category="creativity">
+
+                    <div class="category-card-image category-creativity">
+
+                        <div class="category-icon">
+                            🎨
+                        </div>
+
+                    </div>
+
+                    <div class="category-card-content">
+
+                        <h3>
+                            Creativity
+                        </h3>
+
+                        <p>
+                            Art, writing, design, photography
+                            and creative inspiration.
+                        </p>
+
+                        <span>
+                            103 Stories →
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+
+            <!-- NO RESULT -->
+
+            <div
+                id="categoryNoResult"
+                class="category-no-result">
+
+                <div>
+                    🔎
+                </div>
+
+                <h3>
+                    No category found
+                </h3>
+
+                <p>
+                    Try searching for another topic.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= POPULAR TOPICS ================= -->
+
+        <section class="popular-topics">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p>
+                        TRENDING NOW
+                    </p>
+
+                    <h2>
+                        Popular Topics
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="topic-pills">
+
+                <button onclick="filterCategory('technology')">
+                    #Technology
+                </button>
+
+                <button onclick="filterCategory('programming')">
+                    #Programming
+                </button>
+
+                <button onclick="filterCategory('ai')">
+                    #ArtificialIntelligence
+                </button>
+
+                <button onclick="filterCategory('education')">
+                    #Education
+                </button>
+
+                <button onclick="filterCategory('travel')">
+                    #Travel
+                </button>
+
+                <button onclick="filterCategory('lifestyle')">
+                    #Lifestyle
+                </button>
+
+                <button onclick="filterCategory('business')">
+                    #Business
+                </button>
+
+                <button onclick="filterCategory('creativity')">
+                    #Creativity
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-logo">
+
+            <h2>
+                Blog<span>Sphere</span>
+            </h2>
+
+            <p>
+                Share your story. Inspire the world.
+            </p>
+
+        </div>
+
+
+
+        <p class="copyright">
+            © 2026 BlogSphere. All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

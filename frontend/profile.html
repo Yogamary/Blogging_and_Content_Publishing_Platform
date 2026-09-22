@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BlogSphere | Profile</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body class="profile-page">
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar profile-navbar">
+
+        <div class="logo-area">
+
+            <div class="logo-icon">
+                ✎
+            </div>
+
+            <div class="logo-text">
+
+                <h2>
+                    Blog<span>Sphere</span>
+                </h2>
+
+                <p>
+                    Share · Inspire · Grow
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="explore.html">
+                Explore
+            </a>
+
+            <a href="categories.html">
+                Categories
+            </a>
+
+            <a href="about.html">
+                About Us
+            </a>
+
+        </nav>
+
+
+        <div class="nav-actions">
+
+            <a href="dashboard.html" class="login-btn">
+                Dashboard
+            </a>
+
+            <div class="profile-nav-avatar">
+                Y
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= PROFILE ================= -->
+
+    <main class="profile-main">
+
+
+        <!-- PROFILE HEADER -->
+
+        <section class="profile-header">
+
+            <div class="profile-cover">
+
+                <div class="profile-cover-decoration"></div>
+
+            </div>
+
+
+            <div class="profile-main-info">
+
+                <div class="profile-picture">
+                    Y
+                </div>
+
+
+                <div class="profile-details">
+
+                    <h1>
+                        Your Name
+                    </h1>
+
+                    <p class="profile-username">
+                        @yourusername
+                    </p>
+
+                    <p class="profile-bio">
+                        Technology enthusiast, developer and
+                        blogger sharing ideas about programming,
+                        education and the future of technology.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="edit-profile-btn"
+                    onclick="openProfileEditor()">
+
+                    ✏ Edit Profile
+
+                </button>
+
+            </div>
+
+
+            <!-- PROFILE STATS -->
+
+            <div class="profile-stats">
+
+                <div>
+
+                    <strong>
+                        24
+                    </strong>
+
+                    <span>
+                        Posts
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        248
+                    </strong>
+
+                    <span>
+                        Followers
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        126
+                    </strong>
+
+                    <span>
+                        Following
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROFILE CONTENT -->
+
+        <section class="profile-content">
+
+
+            <!-- LEFT SIDE -->
+
+            <div class="profile-post-area">
+
+
+                <!-- TABS -->
+
+                <div class="profile-tabs">
+
+                    <button
+                        class="profile-tab active"
+                        onclick="showProfileTab('posts', this)">
+
+                        📝 Posts
+
+                    </button>
+
+                    <button
+                        class="profile-tab"
+                        onclick="showProfileTab('about', this)">
+
+                        👤 About
+
+                    </button>
+
+                </div>
+
+
+                <!-- POSTS -->
+
+                <div
+                    id="profilePosts"
+                    class="profile-post-grid">
+
+
+                    <!-- POST 1 -->
+
+                    <article class="profile-post-card">
+
+                        <div class="profile-post-image profile-post-one">
+
+                            <span>
+                                Technology
+                            </span>
+
+                        </div>
+
+                        <div class="profile-post-body">
+
+                            <span class="profile-post-date">
+                                Aug 18, 2026
+                            </span>
+
+                            <h2>
+                                The Future of Web Development
+                            </h2>
+
+                            <p>
+                                Exploring the technologies
+                                shaping modern web development.
+                            </p>
+
+                            <div class="profile-post-footer">
+
+                                <span>
+                                    128 ❤️
+                                </span>
+
+                                <span>
+                                    12 💬
+                                </span>
+
+                                <a href="post.html">
+                                    Read →
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- POST 2 -->
+
+                    <article class="profile-post-card">
+
+                        <div class="profile-post-image profile-post-two">
+
+                            <span>
+                                Programming
+                            </span>
+
+                        </div>
+
+                        <div class="profile-post-body">
+
+                            <span class="profile-post-date">
+                                Aug 12, 2026
+                            </span>
+
+                            <h2>
+                                Getting Started with Java
+                            </h2>
+
+                            <p>
+                                A simple guide to understanding
+                                Java programming.
+                            </p>
+
+                            <div class="profile-post-footer">
+
+                                <span>
+                                    96 ❤️
+                                </span>
+
+                                <span>
+                                    8 💬
+                                </span>
+
+                                <a href="post.html">
+                                    Read →
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- POST 3 -->
+
+                    <article class="profile-post-card">
+
+                        <div class="profile-post-image profile-post-three">
+
+                            <span>
+                                AI
+                            </span>
+
+                        </div>
+
+                        <div class="profile-post-body">
+
+                            <span class="profile-post-date">
+                                Aug 5, 2026
+                            </span>
+
+                            <h2>
+                                Understanding Artificial Intelligence
+                            </h2>
+
+                            <p>
+                                How artificial intelligence is
+                                changing modern technology.
+                            </p>
+
+                            <div class="profile-post-footer">
+
+                                <span>
+                                    210 ❤️
+                                </span>
+
+                                <span>
+                                    21 💬
+                                </span>
+
+                                <a href="post.html">
+                                    Read →
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- POST 4 -->
+
+                    <article class="profile-post-card">
+
+                        <div class="profile-post-image profile-post-four">
+
+                            <span>
+                                Education
+                            </span>
+
+                        </div>
+
+                        <div class="profile-post-body">
+
+                            <span class="profile-post-date">
+                                July 28, 2026
+                            </span>
+
+                            <h2>
+                                How to Learn More Effectively
+                            </h2>
+
+                            <p>
+                                Simple strategies for improving
+                                your learning habits.
+                            </p>
+
+                            <div class="profile-post-footer">
+
+                                <span>
+                                    74 ❤️
+                                </span>
+
+                                <span>
+                                    6 💬
+                                </span>
+
+                                <a href="post.html">
+                                    Read →
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- ABOUT -->
+
+                <div
+                    id="profileAbout"
+                    class="profile-about"
+                    style="display: none;">
+
+                    <h2>
+                        About Me
+                    </h2>
+
+                    <p>
+                        Hello! I'm a passionate technology
+                        enthusiast who enjoys learning about
+                        programming, web development and
+                        artificial intelligence.
+                    </p>
+
+                    <p>
+                        I created this BlogSphere profile to
+                        share what I learn and connect with
+                        other people interested in technology.
+                    </p>
+
+
+                    <div class="about-details">
+
+                        <div>
+                            <span>
+                                📍 Location
+                            </span>
+
+                            <strong>
+                                India
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>
+                                💻 Interests
+                            </span>
+
+                            <strong>
+                                Technology · Programming · AI
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>
+                                📅 Joined
+                            </span>
+
+                            <strong>
+                                January 2026
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT SIDEBAR -->
+
+            <aside class="profile-sidebar">
+
+
+                <!-- SOCIAL LINKS -->
+
+                <div class="profile-sidebar-card">
+
+                    <h3>
+                        Connect
+                    </h3>
+
+                    <a href="#">
+                        🌐 Website
+                    </a>
+
+                    <a href="#">
+                        💼 LinkedIn
+                    </a>
+
+                    <a href="#">
+                        🐙 GitHub
+                    </a>
+
+                </div>
+
+
+                <!-- INTERESTS -->
+
+                <div class="profile-sidebar-card">
+
+                    <h3>
+                        Interests
+                    </h3>
+
+                    <div class="interest-tags">
+
+                        <span>
+                            Java
+                        </span>
+
+                        <span>
+                            Web Development
+                        </span>
+
+                        <span>
+                            AI
+                        </span>
+
+                        <span>
+                            Technology
+                        </span>
+
+                        <span>
+                            Education
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACCOUNT -->
+
+                <div class="profile-sidebar-card">
+
+                    <h3>
+                        Account
+                    </h3>
+
+                    <a href="account-settings.html">
+                        ⚙ Settings
+                    </a>
+
+                    <a href="dashboard.html">
+                        📊 Dashboard
+                    </a>
+
+                    <button
+                        onclick="logoutUser()">
+
+                        🚪 Logout
+
+                    </button>
+
+                </div>
+
+            </aside>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= PROFILE EDIT MODAL ================= -->
+
+    <div
+        id="profileModal"
+        class="profile-modal">
+
+        <div class="profile-modal-content">
+
+            <button
+                class="close-modal"
+                onclick="closeProfileEditor()">
+
+                ×
+
+            </button>
+
+            <h2>
+                Edit Profile
+            </h2>
+
+            <p>
+                Update your profile information.
+            </p>
+
+
+            <label>
+                Name
+            </label>
+
+            <input
+                type="text"
+                id="editName"
+                value="Your Name"
+            >
+
+
+            <label>
+                Username
+            </label>
+
+            <input
+                type="text"
+                id="editUsername"
+                value="@yourusername"
+            >
+
+
+            <label>
+                Bio
+            </label>
+
+            <textarea
+                id="editBio">Technology enthusiast, developer and blogger sharing ideas about programming, education and technology.</textarea>
+
+
+            <button
+                class="save-profile-btn"
+                onclick="saveProfile()">
+
+                Save Changes
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-logo">
+
+            <h2>
+                Blog<span>Sphere</span>
+            </h2>
+
+            <p>
+                Share your story. Inspire the world.
+            </p>
+
+        </div>
+
+
+
+        <p class="copyright">
+            © 2026 BlogSphere. All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

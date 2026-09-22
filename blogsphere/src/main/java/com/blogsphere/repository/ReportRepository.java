@@ -1,0 +1,7 @@
+package com.blogsphere.repository;
+
+import com.blogsphere.entity.Report;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ReportRepository extends JpaRepository<Report, Long> {
+}

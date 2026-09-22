@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>BlogSphere | Account Settings</title>
+
+    <link rel="stylesheet"
+        href="style.css">
+
+    <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+</head>
+
+
+<body class="settings-page">
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <header class="navbar settings-navbar">
+
+
+        <!-- LOGO -->
+
+        <div class="logo-area">
+
+            <div class="logo-icon">
+                ✎
+            </div>
+
+            <div class="logo-text">
+
+                <h2>
+                    Blog<span>Sphere</span>
+                </h2>
+
+                <p>
+                    Share · Inspire · Grow
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="explore.html">
+                Explore
+            </a>
+
+            <a href="categories.html">
+                Categories
+            </a>
+
+            <a href="about.html">
+                About Us
+            </a>
+
+        </nav>
+
+
+        <!-- NAV ACTIONS -->
+
+        <div class="nav-actions">
+
+            <a href="dashboard.html"
+                class="login-btn">
+
+                Dashboard
+
+            </a>
+
+            <a href="profile.html"
+                class="nav-register-btn">
+
+                Profile
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="settings-main">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="settings-header">
+
+            <div>
+
+                <p class="small-heading">
+                    ACCOUNT
+                </p>
+
+                <h1>
+                    Account Settings
+                </h1>
+
+                <p>
+                    Manage your profile, security, notifications
+                    and privacy preferences.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SETTINGS LAYOUT
+        ================================================== -->
+
+        <div class="settings-layout">
+
+
+            <!-- =================================================
+                 SIDEBAR
+            ================================================== -->
+
+            <aside class="settings-sidebar">
+
+
+                <!-- PROFILE -->
+
+                <button
+                    class="settings-tab active"
+                    onclick="showSettings('profileSettings', this)">
+
+                    👤
+
+                    <span>
+                        Profile
+                    </span>
+
+                </button>
+
+
+                <!-- SECURITY -->
+
+                <button
+                    class="settings-tab"
+                    onclick="showSettings('securitySettings', this)">
+
+                    🔐
+
+                    <span>
+                        Security
+                    </span>
+
+                </button>
+
+
+                <!-- NOTIFICATIONS -->
+
+                <button
+                    class="settings-tab"
+                    onclick="showSettings('notificationSettings', this)">
+
+                    🔔
+
+                    <span>
+                        Notifications
+                    </span>
+
+                </button>
+
+
+                <!-- PRIVACY -->
+
+                <button
+                    class="settings-tab"
+                    onclick="showSettings('privacySettings', this)">
+
+                    🔒
+
+                    <span>
+                        Privacy
+                    </span>
+
+                </button>
+
+
+                <!-- PREFERENCES -->
+
+                <button
+                    class="settings-tab"
+                    onclick="showSettings('preferencesSettings', this)">
+
+                    ⚙️
+
+                    <span>
+                        Preferences
+                    </span>
+
+                </button>
+
+
+                <!-- DANGER ZONE -->
+
+                <button
+                    class="settings-tab danger-tab"
+                    onclick="showSettings('dangerSettings', this)">
+
+                    ⚠️
+
+                    <span>
+                        Danger Zone
+                    </span>
+
+                </button>
+
+
+                <!-- LOGOUT -->
+
+                <button
+                    class="settings-tab"
+                    onclick="showSettings('logoutSettings', this)">
+
+                    🚪
+
+                    <span>
+                        Logout
+                    </span>
+
+                </button>
+
+
+            </aside>
+
+
+
+            <!-- =================================================
+                 SETTINGS CONTENT
+            ================================================== -->
+
+            <section class="settings-content">
+
+
+
+                <!-- =================================================
+                     PROFILE SETTINGS
+                ================================================== -->
+
+                <div id="profileSettings"
+                    class="settings-panel active">
+
+
+                    <div class="panel-heading">
+
+                        <h2>
+                            Profile Information
+                        </h2>
+
+                        <p>
+                            Update your personal information.
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- PROFILE PICTURE -->
+
+                    <div class="profile-picture-settings">
+
+
+                        <div class="settings-avatar">
+                            👤
+                        </div>
+
+
+                        <div>
+
+                            <h3>
+                                Profile Picture
+                            </h3>
+
+                            <p>
+                                JPG, PNG or WEBP.
+                                Maximum 2MB.
+                            </p>
+
+                            <button
+                                class="outline-btn">
+
+                                Change Picture
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- FORM -->
+
+                    <div class="form-grid">
+
+
+                        <div class="settings-field">
+
+                            <label>
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                placeholder="Your full name">
+
+                        </div>
+
+
+
+                        <div class="settings-field">
+
+                            <label>
+                                Username
+                            </label>
+
+                            <input
+                                type="text"
+                                placeholder="@username">
+
+                        </div>
+
+
+
+                        <div class="settings-field">
+
+                            <label>
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                placeholder="you@example.com">
+
+                        </div>
+
+
+
+                        <div class="settings-field">
+
+                            <label>
+                                Website
+                            </label>
+
+                            <input
+                                type="url"
+                                placeholder="https://example.com">
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- BIO -->
+
+                    <div class="settings-field">
+
+                        <label>
+                            Bio
+                        </label>
+
+                        <textarea
+                            rows="5"
+                            placeholder="Tell readers something about yourself..."></textarea>
+
+                    </div>
+
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="settings-actions">
+
+
+                        <button class="cancel-btn">
+                            Cancel
+                        </button>
+
+
+                        <button
+                            class="save-btn"
+                            onclick="saveSettings()">
+
+                            Save Changes
+
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SECURITY SETTINGS
+                ================================================== -->
+
+                <div id="securitySettings"
+                    class="settings-panel">
+
+
+                    <div class="panel-heading">
+
+                        <h2>
+                            Security
+                        </h2>
+
+                        <p>
+                            Keep your BlogSphere account secure.
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="security-card">
+
+
+                        <div>
+
+                            <h3>
+                                Password
+                            </h3>
+
+                            <p>
+                                Change your password regularly
+                                to keep your account secure.
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            class="outline-btn">
+
+                            Change Password
+
+                        </button>
+
+
+                    </div>
+
+
+
+                    <!-- TWO FACTOR -->
+
+                    <div class="security-card">
+
+
+                        <div>
+
+                            <h3>
+                                Two-Factor Authentication
+                            </h3>
+
+                            <p>
+                                Add an additional layer of security
+                                to your account.
+                            </p>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox">
+
+                            <span class="slider"></span>
+
+                        </label>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     NOTIFICATION SETTINGS
+                ================================================== -->
+
+                <div id="notificationSettings"
+                    class="settings-panel">
+
+
+                    <div class="panel-heading">
+
+                        <h2>
+                            Notifications
+                        </h2>
+
+                        <p>
+                            Choose which notifications you want
+                            to receive.
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- EMAIL -->
+
+                    <div class="setting-option">
+
+
+                        <div>
+
+                            <h3>
+                                Email Notifications
+                            </h3>
+
+                            <p>
+                                Receive important account updates
+                                through email.
+                            </p>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                checked>
+
+                            <span class="slider"></span>
+
+                        </label>
+
+
+                    </div>
+
+
+
+                    <!-- COMMENTS -->
+
+                    <div class="setting-option">
+
+
+                        <div>
+
+                            <h3>
+                                Comment Notifications
+                            </h3>
+
+                            <p>
+                                Get notified when someone comments
+                                on your posts.
+                            </p>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                checked>
+
+                            <span class="slider"></span>
+
+                        </label>
+
+
+                    </div>
+
+
+
+                    <!-- LIKES -->
+
+                    <div class="setting-option">
+
+
+                        <div>
+
+                            <h3>
+                                Like Notifications
+                            </h3>
+
+                            <p>
+                                Get notified when someone likes
+                                your posts.
+                            </p>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                checked>
+
+                            <span class="slider"></span>
+
+                        </label>
+
+
+                    </div>
+
+
+
+                    <!-- FOLLOWERS -->
+
+                    <div class="setting-option">
+
+
+                        <div>
+
+                            <h3>
+                                Follower Notifications
+                            </h3>
+
+                            <p>
+                                Get notified when someone follows you.
+                            </p>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox">
+
+                            <span class="slider"></span>
+
+                        </label>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PRIVACY SETTINGS
+                ================================================== -->
+
+                <div id="privacySettings"
+                    class="settings-panel">
+
+
+                    <div class="panel-heading">
+
+                        <h2>
+                            Privacy
+                        </h2>
+
+                        <p>
+                            Control how other users interact with you.
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- PUBLIC PROFILE -->
+
+                    <div class="setting-option">
+
+
+                        <div>
+
+                            <h3>
+                                Public Profile
+                            </h3>
+
+                            <p>
+                                Allow anyone to view your profile.
+                            </p>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                checked>
+
+                            <span class="slider"></span>
+
+                        </label>
+
+
+                    </div>
+
+
+
+                    <!-- FOLLOWERS -->
+
+                    <div class="setting-option">
+
+
+                        <div>
+
+                            <h3>
+                                Allow Followers
+                            </h3>
+
+                            <p>
+                                Allow other users to follow your profile.
+                            </p>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                checked>
+
+                            <span class="slider"></span>
+
+                        </label>
+
+
+                    </div>
+
+
+
+                    <!-- EMAIL -->
+
+                    <div class="setting-option">
+
+
+                        <div>
+
+                            <h3>
+                                Show Email Address
+                            </h3>
+
+                            <p>
+                                Display your email address on your profile.
+                            </p>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox">
+
+                            <span class="slider"></span>
+
+                        </label>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PREFERENCES SETTINGS
+                ================================================== -->
+
+                <div id="preferencesSettings"
+                    class="settings-panel">
+
+
+                    <div class="panel-heading">
+
+                        <h2>
+                            Preferences
+                        </h2>
+
+                        <p>
+                            Customize your BlogSphere experience.
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- DEFAULT CATEGORY -->
+
+                    <div class="settings-field">
+
+                        <label>
+                            Default Blog Category
+                        </label>
+
+                        <select>
+
+                            <option>
+                                Technology
+                            </option>
+
+                            <option>
+                                Programming
+                            </option>
+
+                            <option>
+                                Artificial Intelligence
+                            </option>
+
+                            <option>
+                                Education
+                            </option>
+
+                            <option>
+                                Travel
+                            </option>
+
+                            <option>
+                                Lifestyle
+                            </option>
+
+                            <option>
+                                Business
+                            </option>
+
+                            <option>
+                                Creativity
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- LANGUAGE -->
+
+                    <div class="settings-field">
+
+                        <label>
+                            Language
+                        </label>
+
+                        <select>
+
+                            <option>
+                                English
+                            </option>
+
+                            <option>
+                                Tamil
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- DARK MODE -->
+
+                    <div class="setting-option">
+
+
+                        <div>
+
+                            <h3>
+                                Dark Mode
+                            </h3>
+
+                            <p>
+                                Switch between light and dark appearance.
+                            </p>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox">
+
+                            <span class="slider"></span>
+
+                        </label>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     DANGER ZONE
+                ================================================== -->
+
+                <div id="dangerSettings"
+                    class="settings-panel">
+
+
+                    <div class="panel-heading">
+
+                        <h2 class="danger-title">
+                            Danger Zone
+                        </h2>
+
+                        <p>
+                            These actions can affect your account permanently.
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- DEACTIVATE -->
+
+                    <div class="danger-card">
+
+
+                        <div>
+
+                            <h3>
+                                Deactivate Account
+                            </h3>
+
+                            <p>
+                                Temporarily disable your BlogSphere account.
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            class="danger-outline-btn">
+
+                            Deactivate
+
+                        </button>
+
+
+                    </div>
+
+
+
+                    <!-- DELETE -->
+
+                    <div class="danger-card">
+
+
+                        <div>
+
+                            <h3>
+                                Delete Account
+                            </h3>
+
+                            <p>
+                                Permanently delete your account and
+                                associated content.
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            class="delete-btn"
+                            onclick="confirmDeleteAccount()">
+
+                            Delete Account
+
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     LOGOUT
+                ================================================== -->
+
+                <div id="logoutSettings"
+                    class="settings-panel">
+
+
+                    <div class="panel-heading">
+
+                        <h2>
+                            Logout
+                        </h2>
+
+                        <p>
+                            Sign out of your BlogSphere account on this device.
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="danger-card">
+
+
+                        <div>
+
+                            <h3>
+                                Sign Out
+                            </h3>
+
+                            <p>
+                                You will be redirected to the login page
+                                after signing out of your account.
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            class="danger-outline-btn"
+                            onclick="logoutUser()">
+
+                            Logout
+
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+
+        <div class="footer-logo">
+
+            <h2>
+                Blog<span>Sphere</span>
+            </h2>
+
+            <p>
+                Share your story. Inspire the world.
+            </p>
+
+        </div>
+
+
+        <p class="copyright">
+            © 2026 BlogSphere. All rights reserved.
+        </p>
+
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>
+

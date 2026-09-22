@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BlogSphere | Create Post</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body class="create-post-page">
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar create-navbar">
+
+        <div class="logo-area">
+
+            <div class="logo-icon">
+                ✎
+            </div>
+
+            <div class="logo-text">
+
+                <h2>
+                    Blog<span>Sphere</span>
+                </h2>
+
+                <p>
+                    Share · Inspire · Grow
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="explore.html">
+                Explore
+            </a>
+
+            <a href="categories.html">
+                Categories
+            </a>
+
+            <a href="about.html">
+                About Us
+            </a>
+
+        </nav>
+
+
+        <div class="nav-actions">
+
+            <a href="explore.html" class="login-btn">
+                Cancel
+            </a>
+
+            <button
+                class="register-btn"
+                onclick="publishPost()">
+
+                Publish
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= CREATE POST ================= -->
+
+    <main class="create-main">
+
+        <div class="create-heading">
+
+            <div>
+
+                <p>
+                    CREATE SOMETHING AMAZING
+                </p>
+
+                <h1>
+                    Write your story.
+                </h1>
+
+            </div>
+
+            <span id="saveStatus">
+                ● Draft
+            </span>
+
+        </div>
+
+
+        <div class="editor-layout">
+
+
+            <!-- ================= EDITOR ================= -->
+
+            <section class="editor-card">
+
+
+                <!-- TITLE -->
+
+                <input
+                    type="text"
+                    id="postTitle"
+                    class="post-title-input"
+                    placeholder="Enter your blog title..."
+                >
+
+
+                <!-- CATEGORY -->
+
+                <div class="editor-row">
+
+                    <div class="editor-field">
+
+                        <label for="postCategory">
+                            Category
+                        </label>
+
+                        <select id="postCategory">
+
+                            <option value="">
+                                Select category
+                            </option>
+
+                            <option value="technology">
+                                Technology
+                            </option>
+
+                            <option value="programming">
+                                Programming
+                            </option>
+
+                            <option value="education">
+                                Education
+                            </option>
+
+                            <option value="travel">
+                                Travel
+                            </option>
+
+                            <option value="lifestyle">
+                                Lifestyle
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="editor-field">
+
+                        <label for="postTags">
+                            Tags
+                        </label>
+
+                        <input
+                            type="text"
+                            id="postTags"
+                            placeholder="Java, AI, Web..."
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- COVER IMAGE -->
+
+                <div class="cover-image-section">
+
+                    <label>
+                        Cover Image
+                    </label>
+
+                    <div
+                        class="cover-upload"
+                        onclick="document.getElementById('coverImage').click()">
+
+                        <div class="upload-icon">
+                            ↑
+                        </div>
+
+                        <h3>
+                            Add a cover image
+                        </h3>
+
+                        <p>
+                            Click to choose an image from your device
+                        </p>
+
+                        <input
+                            type="file"
+                            id="coverImage"
+                            accept="image/*"
+                            hidden
+                            onchange="previewCoverImage(event)"
+                        >
+
+                    </div>
+
+                    <img
+                        id="coverPreview"
+                        class="cover-preview"
+                        alt="Cover preview"
+                    >
+
+                </div>
+
+
+                <!-- TOOLBAR -->
+
+                <div class="editor-toolbar">
+
+                    <button
+                        type="button"
+                        onclick="formatText('bold')">
+                        B
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="formatText('italic')">
+                        I
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="formatText('underline')">
+                        U
+                    </button>
+
+                    <span></span>
+
+                    <button
+                        type="button"
+                        onclick="formatText('insertUnorderedList')">
+                        • List
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="formatText('insertOrderedList')">
+                        1. List
+                    </button>
+
+                    <span></span>
+
+                    <button
+                        type="button"
+                        onclick="formatText('justifyLeft')">
+                        ≡
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="formatText('justifyCenter')">
+                        ≡
+                    </button>
+
+                </div>
+
+
+                <!-- CONTENT -->
+
+                <div
+                    id="postContent"
+                    class="content-editor"
+                    contenteditable="true"
+                    data-placeholder="Start writing your story here..."
+                ></div>
+
+
+                <!-- EDITOR FOOTER -->
+
+                <div class="editor-footer">
+
+                    <span id="wordCount">
+                        0 words
+                    </span>
+
+                    <span id="readingTime">
+                        0 min read
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= SIDE PANEL ================= -->
+
+            <aside class="publish-sidebar">
+
+
+                <!-- PUBLISH CARD -->
+
+                <div class="publish-card">
+
+                    <h3>
+                        Publish Settings
+                    </h3>
+
+                    <p>
+                        Choose how you want your article to appear.
+                    </p>
+
+
+                    <div class="setting-item">
+
+                        <label>
+                            Visibility
+                        </label>
+
+                        <select id="visibility">
+
+                            <option value="public">
+                                🌎 Public
+                            </option>
+
+                            <option value="private">
+                                🔒 Private
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="setting-item">
+
+                        <label>
+                            Comments
+                        </label>
+
+                        <select id="comments">
+
+                            <option value="enabled">
+                                Enabled
+                            </option>
+
+                            <option value="disabled">
+                                Disabled
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                        class="save-draft-btn"
+                        onclick="saveDraft()">
+
+                        Save as Draft
+
+                    </button>
+
+
+                    <button
+                        class="publish-main-btn"
+                        onclick="publishPost()">
+
+                        Publish Article
+
+                    </button>
+
+                </div>
+
+
+                <!-- WRITING TIPS -->
+
+                <div class="writing-tips">
+
+                    <h3>
+                        ✨ Writing Tips
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Choose a clear and interesting title.
+                        </li>
+
+                        <li>
+                            Break long content into smaller sections.
+                        </li>
+
+                        <li>
+                            Add relevant tags to reach readers.
+                        </li>
+
+                        <li>
+                            Use images to make your article engaging.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- QUICK INFO -->
+
+                <div class="draft-info">
+
+                    <div>
+                        <span>
+                            Status
+                        </span>
+
+                        <strong id="draftStatus">
+                            Draft
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>
+                            Words
+                        </span>
+
+                        <strong id="sidebarWordCount">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-logo">
+
+            <h2>
+                Blog<span>Sphere</span>
+            </h2>
+
+            <p>
+                Share your story. Inspire the world.
+            </p>
+
+        </div>
+
+
+
+        <p class="copyright">
+            © 2026 BlogSphere. All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

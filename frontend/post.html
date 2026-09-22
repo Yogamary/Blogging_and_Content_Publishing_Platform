@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BlogSphere | Blog Post</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body class="post-page">
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar post-navbar">
+
+        <div class="logo-area">
+
+            <div class="logo-icon">
+                ✎
+            </div>
+
+            <div class="logo-text">
+
+                <h2>
+                    Blog<span>Sphere</span>
+                </h2>
+
+                <p>
+                    Share · Inspire · Grow
+                </p>
+
+            </div>
+
+        </div>
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="explore.html" class="active">
+                Explore
+            </a>
+
+            <a href="categories.html">
+                Categories
+            </a>
+
+            <a href="about.html">
+                About Us
+            </a>
+
+        </nav>
+
+        <div class="nav-actions">
+
+            <button class="search-btn">
+                
+            </button>
+
+            <a href="login.html" class="login-btn">
+                Login
+            </a>
+
+            <a href="register.html" class="register-btn">
+                Register
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= ARTICLE ================= -->
+
+    <main class="post-main">
+
+        <!-- BACK -->
+
+        <a href="explore.html" class="post-back">
+            ← Back to Explore
+        </a>
+
+
+        <!-- CATEGORY -->
+
+        <div class="post-category" id="postCategory">
+            Loading...
+        </div>
+
+
+        <!-- TITLE -->
+
+        <h1 class="post-title" id="postTitle">
+            Loading...
+        </h1>
+
+
+        <!-- INTRO -->
+
+        <p class="post-intro" id="postIntro">
+            Loading...
+        </p>
+
+
+        <!-- AUTHOR INFORMATION -->
+
+        <div class="post-author-row">
+
+            <div class="post-author">
+
+                <div class="post-author-avatar" id="postAuthorAvatar">
+                    ?
+                </div>
+
+                <div>
+
+                    <strong id="postAuthor">
+                        Loading...
+                    </strong>
+
+                    <span id="postMeta">
+                        Loading...
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- POST ACTIONS -->
+
+                   
+            <div class="post-actions">
+
+              <!-- LIKE -->
+
+             <button
+               class="post-action-btn"
+               id="likeButton"
+               onclick="likePost()">
+
+               ♡
+             <span id="likeCount">0</span>
+
+            </button>
+
+
+            <!-- BOOKMARK -->
+
+            <button
+              class="post-action-btn"
+              id="bookmarkButton"
+              onclick="toggleBookmark()">
+
+             🔖
+            <span>Save</span>
+
+           </button>
+
+
+         <!-- SHARE -->
+
+    <button
+        class="post-action-btn"
+        onclick="sharePost()">
+
+        🔗
+        Share
+
+    </button>
+     <button class="post-action-btn" onclick="reportBlog()">🚩 Report</button>
+
+</div>
+
+        </div>
+
+
+        <!-- ================= FEATURED IMAGE ================= -->
+
+        <div class="post-featured-image">
+
+            <img
+                id="postImage"
+                src=""
+                alt="Blog image">
+
+        </div>
+
+
+        <!-- ================= ARTICLE LAYOUT ================= -->
+
+        <div class="post-layout">
+
+
+            <!-- ================= ARTICLE CONTENT ================= -->
+
+            <article
+                class="article-content"
+                id="articleContent">
+
+                <p>
+                    Loading blog content...
+                </p>
+
+            </article>
+
+
+            <!-- ================= SIDEBAR ================= -->
+
+            <aside class="post-sidebar">
+
+
+                <!-- TABLE OF CONTENTS -->
+
+                <div class="toc-card">
+
+                    <h3>
+                        In This Article
+                    </h3>
+
+                    <a href="#section1">
+                        A New Era of Web Development
+                    </a>
+
+                    <a href="#section2">
+                        The Role of Artificial Intelligence
+                    </a>
+
+                    <a href="#section3">
+                        What Developers Should Learn
+                    </a>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+
+        <!-- ================= COMMENTS ================= -->
+
+        <section class="comments-section">
+
+
+            <!-- COMMENTS HEADING -->
+
+            <div class="comments-heading">
+
+                <h2>
+                    Comments
+                </h2>
+
+                <span id="commentCount">
+                    0 comments
+                </span>
+
+            </div>
+
+
+            <!-- COMMENT FORM -->
+
+            <div class="comment-form">
+
+                <div class="comment-avatar">
+                    ?
+                </div>
+
+                <div class="comment-input-area">
+
+                    <textarea
+                        id="commentInput"
+                        placeholder="Share your thoughts..."></textarea>
+
+                    <div class="comment-submit-row">
+
+                        <button
+                            onclick="addComment()">
+
+                            Post Comment
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= EXISTING COMMENTS ================= -->
+
+            <div id="commentsList">
+
+                <p class="no-comments">
+                    Loading comments...
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= RELATED POSTS ================= -->
+
+        <section class="related-section">
+
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="heading-line"></span>
+
+                    <h2>
+                        You May Also Like
+                    </h2>
+
+                </div>
+
+
+                <a
+                    href="explore.html"
+                    class="view-all">
+
+                    View All →
+
+                </a>
+
+            </div>
+
+
+            <div class="related-grid">
+
+
+                <!-- RELATED POST 1 -->
+
+                <article class="related-card">
+
+                    <div class="related-image related-one">
+
+                        <span>
+                            Programming
+                        </span>
+
+                    </div>
+
+                    <div class="related-content">
+
+                        <h3>
+                            Getting Started with Java
+                        </h3>
+
+                        <p>
+                            Learn the basics of Java programming
+                            and object-oriented concepts.
+                        </p>
+
+                        <a href="post.html?id=2">
+                            Read Article →
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+                <!-- RELATED POST 2 -->
+
+                <article class="related-card">
+
+                    <div class="related-image related-two">
+
+                        <span>
+                            Technology
+                        </span>
+
+                    </div>
+
+                    <div class="related-content">
+
+                        <h3>
+                            Understanding Artificial Intelligence
+                        </h3>
+
+                        <p>
+                            Learn how AI is changing the way
+                            we build technology.
+                        </p>
+
+                        <a href="post.html?id=3">
+                            Read Article →
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+                <!-- RELATED POST 3 -->
+
+                <article class="related-card">
+
+                    <div class="related-image related-three">
+
+                        <span>
+                            Education
+                        </span>
+
+                    </div>
+
+                    <div class="related-content">
+
+                        <h3>
+                            How to Learn More Effectively
+                        </h3>
+
+                        <p>
+                            Simple strategies to improve
+                            your learning habits.
+                        </p>
+
+                        <a href="post.html?id=4">
+                            Read Article →
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-logo">
+
+            <h2>
+                Blog<span>Sphere</span>
+            </h2>
+
+            <p>
+                Share your story. Inspire the world.
+            </p>
+
+        </div>
+
+        <p class="copyright">
+            © 2026 BlogSphere. All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
