@@ -54,6 +54,6 @@ public class FileUploadController {
                 filePath
         );
 
-        return "http://localhost:8080/uploads/" + fileName;
+        return "https://blogsphere-backend-9raa.onrender.com/uploads/" + fileName;
     }
 }

@@ -172,7 +172,7 @@ async function loginUser() {
 
         const response =
             await fetch(
-                "http://localhost:8080/api/users/login",
+                "https://blogsphere-backend-9raa.onrender.com/api/users/login",
                 {
                     method: "POST",
 
@@ -319,7 +319,7 @@ async function registerUser() {
 
         const response =
             await fetch(
-                "http://localhost:8080/api/users/register",
+                "https://blogsphere-backend-9raa.onrender.com/api/users/register",
                 {
                     method: "POST",
 
@@ -747,7 +747,7 @@ async function publishPost() {
 
             const uploadResponse =
                 await fetch(
-                    "http://localhost:8080/api/upload",
+                    "https://blogsphere-backend-9raa.onrender.com/api/upload",
                     {
                         method: "POST",
                         body: formData
@@ -800,7 +800,7 @@ async function publishPost() {
 
         const response =
             await fetch(
-                "http://localhost:8080/api/blogs",
+                "https://blogsphere-backend-9raa.onrender.com/api/blogs",
                 {
                     method: "POST",
 
@@ -1534,7 +1534,7 @@ async function loadBlogs() {
 
         const response =
             await fetch(
-                "http://localhost:8080/api/blogs"
+                "https://blogsphere-backend-9raa.onrender.com/api/blogs"
             );
 
 
@@ -1807,7 +1807,7 @@ async function deleteBlog(blogId) {
 
         const response =
             await fetch(
-                "http://localhost:8080/api/blogs/" +
+                "https://blogsphere-backend-9raa.onrender.com/api/blogs/" +
                 blogId,
                 {
                     method: "DELETE"
@@ -1968,7 +1968,7 @@ async function loadBlogPost() {
 
         const response =
             await fetch(
-                "http://localhost:8080/api/blogs/" +
+                "https://blogsphere-backend-9raa.onrender.com/api/blogs/" +
                 blogId
             );
 
@@ -2257,7 +2257,7 @@ async function loadEditBlog() {
 
         const response =
             await fetch(
-                "http://localhost:8080/api/blogs/" +
+                "https://blogsphere-backend-9raa.onrender.com/api/blogs/" +
                 blogId
             );
 
@@ -2457,7 +2457,7 @@ async function updateBlog() {
 
         const currentResponse =
             await fetch(
-                "http://localhost:8080/api/blogs/" + blogId
+                "https://blogsphere-backend-9raa.onrender.com/api/blogs/" + blogId
             );
 
         if (!currentResponse.ok) {
@@ -2494,7 +2494,7 @@ async function updateBlog() {
 
             const uploadResponse =
                 await fetch(
-                    "http://localhost:8080/api/upload",
+                    "https://blogsphere-backend-9raa.onrender.com/api/upload",
                     {
                         method: "POST",
                         body: formData
@@ -2542,7 +2542,7 @@ async function updateBlog() {
 
         const response =
             await fetch(
-                "http://localhost:8080/api/blogs/" + blogId,
+                "https://blogsphere-backend-9raa.onrender.com/api/blogs/" + blogId,
                 {
                     method: "PUT",
 
@@ -2641,7 +2641,7 @@ async function loadComments() {
 
         const response =
             await fetch(
-                "http://localhost:8080/api/comments/blog/" +
+                "https://blogsphere-backend-9raa.onrender.com/api/comments/blog/" +
                 blogId
             );
 
@@ -2835,7 +2835,7 @@ async function reportComment(commentId) {
 
         const response =
             await fetch(
-                "http://localhost:8080/api/reports",
+                "https://blogsphere-backend-9raa.onrender.com/api/reports",
                 {
                     method: "POST",
 
@@ -2968,7 +2968,7 @@ async function addComment() {
 
         const response =
             await fetch(
-                "http://localhost:8080/api/comments",
+                "https://blogsphere-backend-9raa.onrender.com/api/comments",
                 {
                     method: "POST",
 
@@ -3092,7 +3092,7 @@ async function loadLikes() {
 
         // Get like count
         const countResponse = await fetch(
-            `http://localhost:8080/api/likes/blog/${blogId}/count`
+            `https://blogsphere-backend-9raa.onrender.com/api/likes/blog/${blogId}/count`
         );
 
         const count = await countResponse.json();
@@ -3109,7 +3109,7 @@ async function loadLikes() {
             const user = JSON.parse(userData);
 
             const likedResponse = await fetch(
-                `http://localhost:8080/api/likes/blog/${blogId}/user/${encodeURIComponent(user.name)}`
+                `https://blogsphere-backend-9raa.onrender.com/api/likes/blog/${blogId}/user/${encodeURIComponent(user.name)}`
             );
 
             const hasLiked = await likedResponse.json();
@@ -3152,7 +3152,7 @@ async function likePost() {
     try {
 
         const likedResponse = await fetch(
-            `http://localhost:8080/api/likes/blog/${blogId}/user/${encodeURIComponent(user.name)}`
+            `https://blogsphere-backend-9raa.onrender.com/api/likes/blog/${blogId}/user/${encodeURIComponent(user.name)}`
         );
 
         const hasLiked = await likedResponse.json();
@@ -3161,7 +3161,7 @@ async function likePost() {
 
             // Unlike
             const deleteResponse = await fetch(
-                `http://localhost:8080/api/likes/blog/${blogId}/user/${encodeURIComponent(user.name)}`,
+                `https://blogsphere-backend-9raa.onrender.com/api/likes/blog/${blogId}/user/${encodeURIComponent(user.name)}`,
                 {
                     method: "DELETE"
                 }
@@ -3177,7 +3177,7 @@ async function likePost() {
 
             // Like
             const response = await fetch(
-                "http://localhost:8080/api/likes",
+                "https://blogsphere-backend-9raa.onrender.com/api/likes",
                 {
                     method: "POST",
 
@@ -3201,7 +3201,7 @@ async function likePost() {
 
         // Update count
         const countResponse = await fetch(
-            `http://localhost:8080/api/likes/blog/${blogId}/count`
+            `https://blogsphere-backend-9raa.onrender.com/api/likes/blog/${blogId}/count`
         );
 
         const count = await countResponse.json();
@@ -3268,7 +3268,7 @@ async function loadBookmark() {
     try {
 
         const response = await fetch(
-            `http://localhost:8080/api/bookmarks/blog/${blogId}/user/${encodeURIComponent(user.name)}`
+            `https://blogsphere-backend-9raa.onrender.com/api/bookmarks/blog/${blogId}/user/${encodeURIComponent(user.name)}`
         );
 
         const hasBookmarked = await response.json();
@@ -3313,7 +3313,7 @@ async function toggleBookmark() {
         // Check current bookmark status
 
         const checkResponse = await fetch(
-            `http://localhost:8080/api/bookmarks/blog/${blogId}/user/${encodeURIComponent(user.name)}`
+            `https://blogsphere-backend-9raa.onrender.com/api/bookmarks/blog/${blogId}/user/${encodeURIComponent(user.name)}`
         );
 
         const hasBookmarked = await checkResponse.json();
@@ -3324,7 +3324,7 @@ async function toggleBookmark() {
             // Remove bookmark
 
             const deleteResponse = await fetch(
-                `http://localhost:8080/api/bookmarks/blog/${blogId}/user/${encodeURIComponent(user.name)}`,
+                `https://blogsphere-backend-9raa.onrender.com/api/bookmarks/blog/${blogId}/user/${encodeURIComponent(user.name)}`,
                 {
                     method: "DELETE"
                 }
@@ -3343,7 +3343,7 @@ async function toggleBookmark() {
             // Add bookmark
 
             const response = await fetch(
-                "http://localhost:8080/api/bookmarks",
+                "https://blogsphere-backend-9raa.onrender.com/api/bookmarks",
                 {
                     method: "POST",
 
@@ -3452,7 +3452,7 @@ async function loadMyBookmarks() {
         // Get user's bookmarks
 
         const response = await fetch(
-            `http://localhost:8080/api/bookmarks/user/${encodeURIComponent(user.name)}`
+            `https://blogsphere-backend-9raa.onrender.com/api/bookmarks/user/${encodeURIComponent(user.name)}`
         );
 
         if (!response.ok) {
@@ -3500,7 +3500,7 @@ async function loadMyBookmarks() {
 
                 const blogResponse =
                     await fetch(
-                        `http://localhost:8080/api/blogs/${bookmark.blogId}`
+                        `https://blogsphere-backend-9raa.onrender.com/api/blogs/${bookmark.blogId}`
                     );
 
                 if (!blogResponse.ok) {
@@ -3631,7 +3631,7 @@ async function loadMyBlogs() {
     try {
 
         const response = await fetch(
-            "http://localhost:8080/api/blogs/my/" +
+            "https://blogsphere-backend-9raa.onrender.com/api/blogs/my/" +
             encodeURIComponent(loggedInUser.name)
         );
 
@@ -3750,7 +3750,7 @@ async function loadAdminDashboard() {
 
         const usersResponse =
             await fetch(
-                "http://localhost:8080/api/admin/users"
+                "https://blogsphere-backend-9raa.onrender.com/api/admin/users"
             );
 
         const users =
@@ -3763,7 +3763,7 @@ async function loadAdminDashboard() {
 
         const blogsResponse =
             await fetch(
-                "http://localhost:8080/api/admin/blogs"
+                "https://blogsphere-backend-9raa.onrender.com/api/admin/blogs"
             );
 
         const blogs =
@@ -3776,7 +3776,7 @@ async function loadAdminDashboard() {
 
         const commentsResponse =
             await fetch(
-                "http://localhost:8080/api/admin/comments"
+                "https://blogsphere-backend-9raa.onrender.com/api/admin/comments"
             );
 
         const comments =
@@ -3789,7 +3789,7 @@ async function loadAdminDashboard() {
 
         const reportsResponse =
             await fetch(
-                "http://localhost:8080/api/admin/reports"
+                "https://blogsphere-backend-9raa.onrender.com/api/admin/reports"
             );
 
         const reports =
@@ -4066,7 +4066,7 @@ async function deleteUser(userId) {
     try {
 
         const response = await fetch(
-            "http://localhost:8080/api/users/" + userId,
+            "https://blogsphere-backend-9raa.onrender.com/api/users/" + userId,
             {
                 method: "DELETE"
             }
@@ -4102,7 +4102,7 @@ async function deleteAdminBlog(blogId) {
     try {
 
         const response = await fetch(
-            "http://localhost:8080/api/blogs/" + blogId,
+            "https://blogsphere-backend-9raa.onrender.com/api/blogs/" + blogId,
             {
                 method: "DELETE"
             }
@@ -4140,7 +4140,7 @@ async function deleteAdminComment(commentId) {
     try {
 
         const response = await fetch(
-            "http://localhost:8080/api/comments/" + commentId,
+            "https://blogsphere-backend-9raa.onrender.com/api/comments/" + commentId,
             {
                 method: "DELETE"
             }
@@ -4179,7 +4179,7 @@ async function deleteReport(reportId) {
     try {
 
         const response = await fetch(
-            "http://localhost:8080/api/reports/" + reportId,
+            "https://blogsphere-backend-9raa.onrender.com/api/reports/" + reportId,
             {
                 method: "DELETE"
             }
@@ -4240,7 +4240,7 @@ async function reportBlog() {
 
     try {
 
-        const response = await fetch("http://localhost:8080/api/reports", {
+        const response = await fetch("https://blogsphere-backend-9raa.onrender.com/api/reports", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
