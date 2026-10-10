@@ -133,10 +133,10 @@ These features may be considered as future enhancements after completing the bas
 ### Technology Stack
 
 * **Frontend:** HTML, CSS, JavaScript
-* **Backend:** Java 17 with Spring Boot
+* **Backend:** Java 25 with Spring Boot
 * **ORM / Data Access:** Spring Data JPA with Hibernate
-* **Database:** MySQL 8
-* **Database Management:** MySQL Workbench
+* **Database:** PostgreSQL
+* **Database Management:** PostgreSQl pgAdmin 4
 * **Build Tool:** Maven
 * **Development Environment:** VS Code
 * **Version Control:** Git and GitHub
@@ -144,4 +144,4 @@ These features may be considered as future enhancements after completing the bas
 
 ## Project Scope Summary
 
-The **Blogging & Content Publishing Platform** will provide a simple and user-friendly web application for users to create, publish, read, and interact with blog content. Users will be able to manage their own blog posts, add comments, and like published blogs, while administrators will manage users, categories, blogs, and comments. The system will use **Java Spring Boot, HTML, CSS, JavaScript, and MySQL** to provide a structured and database-driven application. The project is designed to be achievable within the initial capstone implementation period while providing opportunities for future enhancements.
+The **Blogging & Content Publishing Platform** will provide a simple and user-friendly web application for users to create, publish, read, and interact with blog content. Users will be able to manage their own blog posts, add comments, and like published blogs, while administrators will manage users, categories, blogs, and comments. The system will use **Java Spring Boot, HTML, CSS, JavaScript, and PostgreSQL** to provide a structured and database-driven application. The project is designed to be achievable within the initial capstone implementation period while providing opportunities for future enhancements.
