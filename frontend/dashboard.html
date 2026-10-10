@@ -1,8 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -16,76 +16,33 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
-
 </head>
 
 <body class="dashboard-page">
-
 
     <!-- ================= NAVBAR ================= -->
 
     <header class="navbar dashboard-navbar">
 
         <div class="logo-area">
-
-            <div class="logo-icon">
-                ✎
-            </div>
+            <div class="logo-icon">✎</div>
 
             <div class="logo-text">
-
-                <h2>
-                    Blog<span>Sphere</span>
-                </h2>
-
-                <p>
-                    Share · Inspire · Grow
-                </p>
-
+                <h2>Blog<span>Sphere</span></h2>
+                <p>Share · Inspire · Grow</p>
             </div>
-
         </div>
 
-
         <nav class="nav-links">
-
-            <a href="index.html">
-                Home
-            </a>
-
-            <a href="explore.html">
-                Explore
-            </a>
-
-            <a href="categories.html">
-                Categories
-            </a>
-
-            <a href="about.html">
-                About Us
-            </a>
-
+            <a href="index.html">Home</a>
+            <a href="explore.html">Explore</a>
+            <a href="categories.html">Categories</a>
+            <a href="about.html">About Us</a>
         </nav>
 
-
-        <div class="nav-actions">
-
-            <button class="search-btn">
-                
-            </button>
-
-            <div class="dashboard-user">
-
-                <div class="dashboard-user-avatar">
-                    Y
-                </div>
-
-                <span>
-                    My Account
-                </span>
-
-            </div>
-
+        <div class="nav-actions" id="navActions">
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="register.html" class="register-btn">Register</a>
         </div>
 
     </header>
@@ -95,34 +52,25 @@
 
     <main class="dashboard-main">
 
-
         <!-- WELCOME -->
 
         <section class="dashboard-welcome">
 
             <div>
-
-                <p>
-                    YOUR DASHBOARD
-                </p>
+                <p>YOUR DASHBOARD</p>
 
                 <h1>
-                    Welcome back, Blogger 👋
+                    Welcome back,
+                    <span id="dashboardWelcomeName">Blogger</span> 👋
                 </h1>
 
                 <span>
                     Manage your stories and keep creating.
                 </span>
-
             </div>
 
-
-            <a
-                href="create-post.html"
-                class="create-post-btn">
-
+            <a href="create-post.html" class="create-post-btn">
                 + Create New Post
-
             </a>
 
         </section>
@@ -132,23 +80,13 @@
 
         <section class="dashboard-stats">
 
-
             <div class="stat-card">
 
-                <div class="stat-icon">
-                    📝
-                </div>
+                <div class="stat-icon">📝</div>
 
                 <div>
-
-                    <span>
-                        Total Posts
-                    </span>
-
-                    <strong>
-                        24
-                    </strong>
-
+                    <span>Total Posts</span>
+                    <strong id="totalPostsCount">0</strong>
                 </div>
 
             </div>
@@ -156,20 +94,11 @@
 
             <div class="stat-card">
 
-                <div class="stat-icon">
-                    🌎
-                </div>
+                <div class="stat-icon">🌎</div>
 
                 <div>
-
-                    <span>
-                        Published
-                    </span>
-
-                    <strong>
-                        18
-                    </strong>
-
+                    <span>Published</span>
+                    <strong id="publishedPostsCount">0</strong>
                 </div>
 
             </div>
@@ -177,20 +106,11 @@
 
             <div class="stat-card">
 
-                <div class="stat-icon">
-                    📄
-                </div>
+                <div class="stat-icon">📄</div>
 
                 <div>
-
-                    <span>
-                        Drafts
-                    </span>
-
-                    <strong>
-                        6
-                    </strong>
-
+                    <span>Drafts</span>
+                    <strong id="draftPostsCount">—</strong>
                 </div>
 
             </div>
@@ -198,24 +118,14 @@
 
             <div class="stat-card">
 
-                <div class="stat-icon">
-                    ❤️
-                </div>
+                <div class="stat-icon">❤️</div>
 
                 <div>
-
-                    <span>
-                        Total Likes
-                    </span>
-
-                    <strong>
-                        1.8K
-                    </strong>
-
+                    <span>Total Likes</span>
+                    <strong id="totalLikesCount">—</strong>
                 </div>
 
             </div>
-
 
         </section>
 
@@ -224,368 +134,96 @@
 
         <section class="dashboard-content">
 
-
-            <!-- LEFT -->
+            <!-- LEFT: POSTS -->
 
             <div class="dashboard-post-section">
-
 
                 <!-- TABS -->
 
                 <div class="dashboard-tabs">
 
                     <button
+                        type="button"
                         class="dashboard-tab active"
                         onclick="showDashboardPosts('all', this)">
-
                         All Posts
-
                     </button>
 
                     <button
+                        type="button"
                         class="dashboard-tab"
                         onclick="showDashboardPosts('published', this)">
-
                         Published
-
                     </button>
 
                     <button
+                        type="button"
                         class="dashboard-tab"
                         onclick="showDashboardPosts('draft', this)">
-
                         Drafts
-
                     </button>
 
                 </div>
 
 
-                <!-- POSTS -->
+                <!-- DYNAMIC POSTS -->
 
-                <div
-                    id="dashboardPosts"
-                    class="dashboard-posts">
+                <div id="dashboardPosts" class="dashboard-posts">
 
+                    <p id="dashboardLoading">
+                        Loading your posts...
+                    </p>
 
-                    <!-- POST 1 -->
+                    <div id="dashboardEmpty" hidden>
 
-                    <article
-                        class="dashboard-post"
-                        data-status="published">
+                        <h3>No posts yet</h3>
 
-                        <div class="dashboard-post-image dashboard-img-one">
+                        <p>
+                            Your published stories will appear here
+                            when you create your first blog.
+                        </p>
 
-                            <span>
-                                Technology
-                            </span>
+                        <a
+                            href="create-post.html"
+                            class="create-post-btn">
+                            Create Your First Post
+                        </a>
 
-                        </div>
-
-
-                        <div class="dashboard-post-info">
-
-                            <div class="dashboard-post-status published-status">
-                                Published
-                            </div>
-
-                            <h2>
-                                The Future of Web Development
-                            </h2>
-
-                            <p>
-                                Exploring the technologies and
-                                ideas shaping modern web development.
-                            </p>
-
-                            <div class="dashboard-post-meta">
-
-                                <span>
-                                    Aug 18, 2026
-                                </span>
-
-                                <span>
-                                    128 ❤️
-                                </span>
-
-                                <span>
-                                    12 💬
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="post-management">
-
-                            <a
-                                href="post.html"
-                                title="View">
-
-                                👁
-
-                            </a>
-
-                            <a
-                                href="create-post.html"
-                                title="Edit">
-
-                                ✏️
-
-                            </a>
-
-                            <button
-                                onclick="deleteDashboardPost(this)"
-                                title="Delete">
-
-                                🗑
-
-                            </button>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- POST 2 -->
-
-                    <article
-                        class="dashboard-post"
-                        data-status="published">
-
-                        <div class="dashboard-post-image dashboard-img-two">
-
-                            <span>
-                                Programming
-                            </span>
-
-                        </div>
-
-
-                        <div class="dashboard-post-info">
-
-                            <div class="dashboard-post-status published-status">
-                                Published
-                            </div>
-
-                            <h2>
-                                Getting Started with Java
-                            </h2>
-
-                            <p>
-                                A beginner-friendly guide to
-                                understanding Java programming.
-                            </p>
-
-                            <div class="dashboard-post-meta">
-
-                                <span>
-                                    Aug 12, 2026
-                                </span>
-
-                                <span>
-                                    96 ❤️
-                                </span>
-
-                                <span>
-                                    8 💬
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="post-management">
-
-                            <a href="post.html">
-                                👁
-                            </a>
-
-                            <a href="create-post.html">
-                                ✏️
-                            </a>
-
-                            <button
-                                onclick="deleteDashboardPost(this)">
-
-                                🗑
-
-                            </button>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- POST 3 -->
-
-                    <article
-                        class="dashboard-post"
-                        data-status="draft">
-
-                        <div class="dashboard-post-image dashboard-img-three">
-
-                            <span>
-                                Education
-                            </span>
-
-                        </div>
-
-
-                        <div class="dashboard-post-info">
-
-                            <div class="dashboard-post-status draft-status">
-                                Draft
-                            </div>
-
-                            <h2>
-                                How to Learn More Effectively
-                            </h2>
-
-                            <p>
-                                Simple strategies that can help
-                                students improve their learning.
-                            </p>
-
-                            <div class="dashboard-post-meta">
-
-                                <span>
-                                    Last edited Aug 10
-                                </span>
-
-                                <span>
-                                    Draft
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="post-management">
-
-                            <a href="create-post.html">
-                                ✏️
-                            </a>
-
-                            <button
-                                onclick="deleteDashboardPost(this)">
-
-                                🗑
-
-                            </button>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- POST 4 -->
-
-                    <article
-                        class="dashboard-post"
-                        data-status="published">
-
-                        <div class="dashboard-post-image dashboard-img-four">
-
-                            <span>
-                                AI
-                            </span>
-
-                        </div>
-
-
-                        <div class="dashboard-post-info">
-
-                            <div class="dashboard-post-status published-status">
-                                Published
-                            </div>
-
-                            <h2>
-                                Understanding Artificial Intelligence
-                            </h2>
-
-                            <p>
-                                How AI is changing the future of
-                                technology and software development.
-                            </p>
-
-                            <div class="dashboard-post-meta">
-
-                                <span>
-                                    Aug 5, 2026
-                                </span>
-
-                                <span>
-                                    210 ❤️
-                                </span>
-
-                                <span>
-                                    21 💬
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="post-management">
-
-                            <a href="post.html">
-                                👁
-                            </a>
-
-                            <a href="create-post.html">
-                                ✏️
-                            </a>
-
-                            <button
-                                onclick="deleteDashboardPost(this)">
-
-                                🗑
-
-                            </button>
-
-                        </div>
-
-                    </article>
+                    </div>
 
                 </div>
 
             </div>
 
 
-            <!-- RIGHT SIDEBAR -->
+            <!-- RIGHT: SIDEBAR -->
 
             <aside class="dashboard-sidebar">
-
 
                 <!-- PROFILE -->
 
                 <div class="dashboard-profile">
 
-                    <div class="profile-avatar">
-                        Y
+                    <div
+                        class="profile-avatar"
+                        id="dashboardProfileAvatar">
+                        U
                     </div>
 
-                    <h2>
+                    <h2 id="dashboardProfileName">
                         Your Name
                     </h2>
 
-                    <p>
-                        Technology enthusiast and blogger
-                        sharing ideas about programming,
-                        education and technology.
+                    <p id="dashboardProfileBio">
+                        Welcome to BlogSphere! Share your stories,
+                        ideas and knowledge with the community.
                     </p>
 
-                    <button
-                        onclick="editProfile()">
-
+                    <a
+                        href="profile.html"
+                        class="edit-profile-link">
                         Edit Profile
-
-                    </button>
+                    </a>
 
                 </div>
 
@@ -594,9 +232,7 @@
 
                 <div class="quick-actions">
 
-                    <h3>
-                        Quick Actions
-                    </h3>
+                    <h3>Quick Actions</h3>
 
                     <a href="create-post.html">
                         ✍️ Write a New Post
@@ -606,6 +242,14 @@
                         🔎 Explore Blogs
                     </a>
 
+                    <a href="my-blogs.html">
+                        📝 My Blogs
+                    </a>
+
+                    <a href="bookmarks.html">
+                        🔖 My Bookmarks
+                    </a>
+
                     <a href="account-settings.html">
                         ⚙️ Account Settings
                     </a>
@@ -613,48 +257,26 @@
                 </div>
 
 
-                <!-- ACCOUNT INFO -->
+                <!-- ACCOUNT INFORMATION -->
 
                 <div class="account-info">
 
-                    <h3>
-                        Your Journey
-                    </h3>
+                    <h3>Account Information</h3>
 
                     <div>
+                        <span>Email</span>
 
-                        <span>
-                            Member since
-                        </span>
-
-                        <strong>
-                            January 2026
+                        <strong id="dashboardUserEmail">
+                            Not available
                         </strong>
-
                     </div>
 
                     <div>
+                        <span>Account Role</span>
 
-                        <span>
-                            Followers
-                        </span>
-
-                        <strong>
-                            248
+                        <strong id="dashboardUserRole">
+                            USER
                         </strong>
-
-                    </div>
-
-                    <div>
-
-                        <span>
-                            Following
-                        </span>
-
-                        <strong>
-                            126
-                        </strong>
-
                     </div>
 
                 </div>
@@ -672,9 +294,7 @@
 
         <div class="footer-logo">
 
-            <h2>
-                Blog<span>Sphere</span>
-            </h2>
+            <h2>Blog<span>Sphere</span></h2>
 
             <p>
                 Share your story. Inspire the world.
@@ -682,15 +302,14 @@
 
         </div>
 
-
-
-
         <p class="copyright">
             © 2026 BlogSphere. All rights reserved.
         </p>
 
     </footer>
 
+
+    <!-- ================= JAVASCRIPT ================= -->
 
     <script src="script.js"></script>
 

@@ -1,227 +1,184 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>BlogSphere | Admin Dashboard</title>
 
     <link rel="stylesheet" href="style.css">
 
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet">
-
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
 </head>
-
 
 <body class="admin-page">
 
+    <!-- NAVBAR -->
+    <header class="navbar">
 
-<header class="navbar">
+        <div class="logo-area">
+            <div class="logo-icon">✎</div>
 
-    <div class="logo-area">
+            <div class="logo-text">
+                <h2>Blog<span>Sphere</span></h2>
+                <p>Share · Inspire · Grow</p>
+            </div>
+        </div>
 
-        <div class="logo-icon">✎</div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="explore.html">Explore</a>
+            <a href="categories.html">Categories</a>
+            <a href="about.html">About Us</a>
+        </nav>
 
-        <div class="logo-text">
+        <div class="nav-actions" id="navActions">
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="register.html" class="register-btn">Register</a>
+        </div>
 
+    </header>
+
+    <!-- MAIN -->
+    <main class="admin-main">
+
+        <!-- PAGE HEADER -->
+        <section class="admin-header">
+
+            <span class="heading-line"></span>
+
+            <p class="small-heading">BLOGSPHERE MANAGEMENT</p>
+
+            <h1>Admin Dashboard</h1>
+
+            <p>
+                Monitor platform activity and manage users, blogs,
+                comments, and reports.
+            </p>
+
+            <button
+                type="button"
+                class="save-btn"
+                onclick="loadAdminDashboard()">
+                ↻ Refresh Dashboard
+            </button>
+
+        </section>
+
+        <!-- STATISTICS -->
+        <section class="admin-stats">
+
+            <div class="admin-stat-card">
+                <h3 id="totalUsers">—</h3>
+                <p>Total Users</p>
+            </div>
+
+            <div class="admin-stat-card">
+                <h3 id="totalBlogs">—</h3>
+                <p>Total Blogs</p>
+            </div>
+
+            <div class="admin-stat-card">
+                <h3 id="totalComments">—</h3>
+                <p>Total Comments</p>
+            </div>
+
+        </section>
+
+        <!-- USERS -->
+        <section class="admin-section">
+
+            <div class="admin-section-header">
+                <div>
+                    <h2>👥 Users</h2>
+                    <p>View registered accounts and manage users.</p>
+                </div>
+            </div>
+
+            <div class="admin-table-container" id="adminUsers">
+                Loading users...
+            </div>
+
+        </section>
+
+        <!-- BLOGS -->
+        <section class="admin-section">
+
+            <div class="admin-section-header">
+                <div>
+                    <h2>📝 Blogs</h2>
+                    <p>Review published blog posts.</p>
+                </div>
+            </div>
+
+            <div class="admin-table-container" id="adminBlogs">
+                Loading blogs...
+            </div>
+
+        </section>
+
+        <!-- COMMENTS -->
+        <section class="admin-section">
+
+            <div class="admin-section-header">
+                <div>
+                    <h2>💬 Comments</h2>
+                    <p>Review comments posted on the platform.</p>
+                </div>
+            </div>
+
+            <div class="admin-table-container" id="adminComments">
+                Loading comments...
+            </div>
+
+        </section>
+
+        <!-- REPORTS -->
+        <section class="admin-section">
+
+            <div class="admin-section-header">
+                <div>
+                    <h2>🚩 Reports</h2>
+                    <p>Review user-submitted reports.</p>
+                </div>
+            </div>
+
+            <div class="admin-table-container" id="adminReports">
+                Loading reports...
+            </div>
+
+        </section>
+
+        <p class="settings-note">
+            Administrative actions must be authorized by the backend.
+            Hiding admin controls in the frontend alone does not secure them.
+        </p>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="footer-logo">
             <h2>Blog<span>Sphere</span></h2>
-
-            <p>Share · Inspire · Grow</p>
-
+            <p>Share your story. Inspire the world.</p>
         </div>
 
-    </div>
-
-
-    <nav class="nav-links">
-
-        <a href="index.html">Home</a>
-
-        <a href="explore.html">Explore</a>
-
-        <a href="categories.html">Categories</a>
-
-        <a href="about.html">About Us</a>
-
-    </nav>
-
-
-    <div class="nav-actions">
-
-        <a href="index.html" class="login-btn">
-            Home
-        </a>
-
-    </div>
-
-</header>
-
-
-<main class="admin-main">
-
-
-    <section class="admin-header">
-
-        <span class="heading-line"></span>
-
-        <h1>Admin Dashboard</h1>
-
-        <p>
-            Manage users, blogs and comments.
+        <p class="copyright">
+            © 2026 BlogSphere. All rights reserved.
         </p>
 
-    </section>
+    </footer>
 
-
-    <!-- Statistics -->
-
-    <section class="admin-stats">
-
-
-        <div class="admin-stat-card">
-
-            <h3 id="totalUsers">0</h3>
-
-            <p>Total Users</p>
-
-        </div>
-
-
-        <div class="admin-stat-card">
-
-            <h3 id="totalBlogs">0</h3>
-
-            <p>Total Blogs</p>
-
-        </div>
-
-
-        <div class="admin-stat-card">
-
-            <h3 id="totalComments">0</h3>
-
-            <p>Total Comments</p>
-
-        </div>
-
-
-    </section>
-
-
-    <!-- Users -->
-
-    <section class="admin-section">
-
-        <div class="admin-section-header">
-
-            <h2>Users</h2>
-
-        </div>
-
-        <div id="adminUsers"
-             class="admin-table-container">
-
-            Loading users...
-
-        </div>
-
-    </section>
-
-
-    <!-- Blogs -->
-
-    <section class="admin-section">
-
-        <div class="admin-section-header">
-
-            <h2>Blogs</h2>
-
-        </div>
-
-        <div id="adminBlogs"
-             class="admin-table-container">
-
-            Loading blogs...
-
-        </div>
-
-    </section>
-
-
-    <!-- Comments -->
-
-    <section class="admin-section">
-
-        <div class="admin-section-header">
-
-            <h2>Comments</h2>
-
-        </div>
-
-        <div id="adminComments"
-             class="admin-table-container">
-
-            Loading comments...
-
-        </div>
-
-    </section>
-    <!-- Reports -->
-
-<section class="admin-section">
-
-    <div class="admin-section-header">
-
-        <h2>🚩 Reports</h2>
-
-    </div>
-
-    <div id="adminReports"
-         class="admin-table-container">
-
-        Loading reports...
-
-    </div>
-
-</section>
-
-
-</main>
-
-
-<footer>
-
-    <div class="footer-logo">
-
-        <h2>Blog<span>Sphere</span></h2>
-
-        <p>
-            Share your story. Inspire the world.
-        </p>
-
-    </div>
-
-    <p class="copyright">
-        © 2026 BlogSphere. All rights reserved.
-    </p>
-
-</footer>
-
-
-<script src="script.js"></script>
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
 
 </body>
-
 </html>
