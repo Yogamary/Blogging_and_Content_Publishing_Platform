@@ -67,4 +67,22 @@ public String deleteUser(@PathVariable Long id) {
 
     return "User deleted successfully";
 }
+
+@GetMapping("/{id}/profile")
+public ResponseEntity<?> getUserProfile(@PathVariable Long id) {
+    return userService.getUserById(id)
+            .<ResponseEntity<?>>map(user -> {
+                java.util.Map<String, Object> profile =
+                        new java.util.HashMap<>();
+
+                profile.put("id", user.getId());
+                profile.put("name", user.getName());
+                profile.put("email", user.getEmail());
+                profile.put("role", user.getRole());
+
+                return ResponseEntity.ok(profile);
+            })
+            .orElseGet(() -> ResponseEntity.notFound().build());
+}
+
 }

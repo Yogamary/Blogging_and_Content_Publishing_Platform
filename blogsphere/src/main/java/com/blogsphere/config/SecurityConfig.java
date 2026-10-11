@@ -48,6 +48,7 @@ public class SecurityConfig {
                     "/api/comments/**",
                     "/api/likes/**",
                     "/api/bookmarks/**",
+                    "/api/follows/**",
                     "/api/admin/**",
                     "/api/reports/**"
                 ).permitAll()
