@@ -53,25 +53,60 @@
                     </p>
                 </div>
 
-                <button class="edit-profile-btn" onclick="openProfileEditor()">
-                    ✏ Edit Profile
-                </button>
+                  
+<div class="profile-action-buttons">
+    <button
+        type="button"
+        id="followButton"
+        class="edit-profile-btn"
+        style="display: none;"
+        onclick="toggleFollow()">
+        Follow
+    </button>
+
+    <button
+        type="button"
+        id="editProfileButton"
+        class="edit-profile-btn"
+        onclick="openProfileEditor()">
+        ✏ Edit Profile
+    </button>
+</div>
+
             </div>
 
-            <div class="profile-stats">
-                <div>
-                    <strong id="profilePostCount">—</strong>
-                    <span>Posts</span>
-                </div>
-                <div>
-                    <strong>—</strong>
-                    <span>Followers</span>
-                </div>
-                <div>
-                    <strong>—</strong>
-                    <span>Following</span>
-                </div>
-            </div>
+<div class="profile-stats">
+    <div>
+        <strong id="profilePostCount">—</strong>
+        <span>Posts</span>
+    </div>
+
+    <button type="button" class="profile-stat-button"
+        onclick="showFollowList('followers')">
+        <strong id="profileFollowerCount">0</strong>
+        <span>Followers</span>
+    </button>
+
+    <button type="button" class="profile-stat-button"
+        onclick="showFollowList('following')">
+        <strong id="profileFollowingCount">0</strong>
+        <span>Following</span>
+    </button>
+</div>
+
+<div id="followListSection" class="follow-list-section"
+     style="display: none;">
+    <div class="follow-list-header">
+        <h3 id="followListTitle">Followers</h3>
+        <button type="button" onclick="closeFollowList()">✕</button>
+    </div>
+
+    <div id="followListContent">
+        Loading...
+    </div>
+</div>
+
+
         </section>
 
         <section class="profile-content">

@@ -8374,3 +8374,56 @@ footer {
     margin: 0 auto;
     padding: 40px;
 }
+
+.profile-stat-button {
+    border: none;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.profile-stat-button:hover span {
+    text-decoration: underline;
+}
+
+.follow-list-section {
+    margin: 20px 0;
+    padding: 18px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background: white;
+}
+
+.follow-list-header,
+.follow-list-user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.follow-list-header {
+    margin-bottom: 14px;
+}
+
+.follow-list-header button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.follow-list-user {
+    padding: 12px 0;
+    border-top: 1px solid #eeeeee;
+}
+
+.follow-list-user a {
+    color: #5b4bdb;
+    text-decoration: none;
+}

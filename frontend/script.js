@@ -948,61 +948,125 @@ async function publishPost() {
    DASHBOARD
 ========================================= */
 
+/* =========================================
+   DASHBOARD POSTS
+========================================= */
 
-/* FILTER POSTS */
+let dashboardBlogs = [];
 
-function showDashboardPosts(type, button) {
+function renderDashboardPosts(type) {
+    const container = document.getElementById("dashboardPosts");
+    const empty = document.getElementById("dashboardEmpty");
 
-    const posts =
-        document.querySelectorAll(".dashboard-post");
+    if (!container) return;
 
-    const tabs =
-        document.querySelectorAll(".dashboard-tab");
+    container.querySelectorAll(".dashboard-post").forEach(post => post.remove());
 
+    const filteredBlogs = dashboardBlogs.filter(blog => {
+        const status = (blog.status || "PUBLISHED").toUpperCase();
 
-    tabs.forEach(function(tab) {
+        if (type === "all") return true;
 
-        tab.classList.remove("active");
-
+        return status === type.toUpperCase();
     });
 
-
-    if (button) {
-
-        button.classList.add("active");
-
+    if (empty) {
+        empty.hidden = filteredBlogs.length > 0;
     }
 
+    if (filteredBlogs.length === 0) {
+        if (empty) {
+            const heading = empty.querySelector("h3");
+            const message = empty.querySelector("p");
 
-    posts.forEach(function(post) {
+            if (heading) {
+                heading.textContent =
+                    type === "draft" ? "No drafts yet" : "No posts yet";
+            }
 
-        const status =
-            post.getAttribute("data-status");
-
-
-        if (type === "all") {
-
-            post.style.display =
-                "grid";
-
+            if (message) {
+                message.textContent =
+                    type === "draft"
+                        ? "Your saved drafts will appear here."
+                        : "Create your first blog to see it here.";
+            }
         }
+        return;
+    }
 
-        else if (status === type) {
+    filteredBlogs.forEach(blog => {
+        const status = (blog.status || "PUBLISHED").toUpperCase();
 
-            post.style.display =
-                "grid";
+        const card = document.createElement("article");
+        card.className = "dashboard-post";
+        card.dataset.status = status.toLowerCase();
 
-        }
+        const title = document.createElement("h3");
+        title.textContent = blog.title || "Untitled";
 
-        else {
+        const content = document.createElement("p");
+        content.textContent = (blog.content || "").slice(0, 180);
 
-            post.style.display =
-                "none";
+        const badge = document.createElement("span");
+        badge.textContent = status === "DRAFT" ? "Draft" : "Published";
 
-        }
+        const editButton = document.createElement("button");
+        editButton.type = "button";
+        editButton.textContent = "Edit";
+        editButton.addEventListener("click", () => {
+            window.location.href = "edit-blog.html?id=" + blog.id;
+        });
 
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener("click", async () => {
+            if (!confirm("Are you sure you want to delete this post?")) {
+                return;
+            }
+
+            try {
+                const response = await fetch(
+                    "http://localhost:8080/api/blogs/" + blog.id,
+                    { method: "DELETE" }
+                );
+
+                if (!response.ok) {
+                    throw new Error("Delete failed");
+                }
+
+                dashboardBlogs = dashboardBlogs.filter(
+                    item => item.id !== blog.id
+                );
+
+                renderDashboardPosts(type);
+
+                if (typeof loadDashboardStats === "function") {
+                    loadDashboardStats();
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Unable to delete post.");
+            }
+        });
+
+        const actions = document.createElement("div");
+        actions.className = "dashboard-post-actions";
+        actions.append(editButton, deleteButton);
+
+        card.append(title, content, badge, actions);
+        container.appendChild(card);
+    });
+}
+
+function showDashboardPosts(type, button) {
+    document.querySelectorAll(".dashboard-tab").forEach(tab => {
+        tab.classList.remove("active");
     });
 
+    if (button) button.classList.add("active");
+
+    renderDashboardPosts(type);
 }
 
 
@@ -2054,44 +2118,59 @@ async function loadBlogPost() {
 
         }
 
+               
+/* =========================
+   AUTHOR
+========================= */
 
-        /* =========================
-           AUTHOR
-        ========================= */
+const authorElement =
+    document.getElementById("postAuthor");
 
-        const authorElement =
-            document.getElementById(
-                "postAuthor"
+const authorLink =
+    document.getElementById("postAuthorLink");
+
+const authorAvatarElement =
+    document.getElementById("postAuthorAvatar");
+
+const author = blog.author || "Unknown Author";
+
+if (authorElement) {
+    authorElement.textContent = author;
+}
+
+if (authorAvatarElement) {
+    authorAvatarElement.textContent =
+        author.charAt(0).toUpperCase();
+}
+
+if (authorLink) {
+    authorLink.removeAttribute("href");
+    authorLink.style.cursor = "default";
+
+    try {
+        const usersResponse = await fetch(
+            "http://localhost:8080/api/users"
+        );
+
+        if (usersResponse.ok) {
+            const users = await usersResponse.json();
+
+            const authorUser = users.find(user =>
+                user.name &&
+                user.name.toLowerCase() === author.toLowerCase()
             );
 
+            if (authorUser) {
+                authorLink.href =
+                    "profile.html?id=" + authorUser.id;
 
-        const authorAvatarElement =
-            document.getElementById(
-                "postAuthorAvatar"
-            );
-
-
-        const author =
-            blog.author ||
-            "Unknown Author";
-
-
-        if (authorElement) {
-
-            authorElement.textContent =
-                author;
-
+                authorLink.style.cursor = "pointer";
+            }
         }
-
-
-        if (authorAvatarElement) {
-
-            authorAvatarElement.textContent =
-                author
-                    .charAt(0)
-                    .toUpperCase();
-
-        }
+    } catch (error) {
+        console.error("Unable to find author profile:", error);
+    }
+}
 
 
         /* =========================
@@ -4266,3 +4345,938 @@ document.addEventListener("DOMContentLoaded", function () {
     loadMyBookmarks();
 
 });
+/* =========================================
+   DYNAMIC NAVBAR
+========================================= */
+
+function updateNavbar() {
+
+    const navActions = document.getElementById("navActions");
+
+    if (!navActions) {
+        return;
+    }
+
+    const userData = localStorage.getItem("loggedInUser");
+
+    // User is logged out
+    if (!userData) {
+
+        navActions.innerHTML = `
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="register.html" class="register-btn">Register</a>
+        `;
+
+        return;
+    }
+
+    let user;
+
+    try {
+        user = JSON.parse(userData);
+    } catch (error) {
+
+        localStorage.removeItem("loggedInUser");
+
+        navActions.innerHTML = `
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="register.html" class="register-btn">Register</a>
+        `;
+
+        return;
+    }
+
+    const role = (user.role || "USER").toUpperCase();
+
+    // Admin navigation
+    if (role === "ADMIN") {
+
+        navActions.innerHTML = `
+            <a href="admin.html" class="login-btn">Admin Dashboard</a>
+            <a href="profile.html" class="login-btn">Profile</a>
+            <a href="account-settings.html" class="login-btn">Account Settings</a>
+            <button type="button" class="register-btn" onclick="logoutUser()">Logout</button>
+        `;
+
+    } else {
+
+        // Normal user navigation
+        navActions.innerHTML = `
+            <a href="dashboard.html" class="login-btn">Dashboard</a>
+            <a href="profile.html" class="login-btn">Profile</a>
+            <a href="bookmarks.html" class="login-btn">Bookmarks</a>
+            <a href="account-settings.html" class="login-btn">Account Settings</a>
+            <button type="button" class="register-btn" onclick="logoutUser()">Logout</button>
+        `;
+
+    }
+}
+
+/* Update navbar when a page loads */
+document.addEventListener("DOMContentLoaded", function () {
+    updateNavbar();
+});
+
+/* =========================================
+   LOAD DASHBOARD USER INFORMATION
+========================================= */
+
+function loadDashboardUser() {
+    const storedUser = localStorage.getItem("loggedInUser");
+
+    if (!storedUser) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    let user;
+
+    try {
+        user = JSON.parse(storedUser);
+    } catch (error) {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "login.html";
+        return;
+    }
+
+    const name = user.name || "Blogger";
+    const email = user.email || "Not available";
+    const role = (user.role || "USER").toUpperCase();
+
+    const welcomeName = document.getElementById("dashboardWelcomeName");
+    const profileName = document.getElementById("dashboardProfileName");
+    const profileAvatar = document.getElementById("dashboardProfileAvatar");
+    const userEmail = document.getElementById("dashboardUserEmail");
+    const userRole = document.getElementById("dashboardUserRole");
+
+    if (welcomeName) {
+        welcomeName.textContent = name;
+    }
+
+    if (profileName) {
+        profileName.textContent = name;
+    }
+
+    if (profileAvatar) {
+        profileAvatar.textContent = name.charAt(0).toUpperCase();
+    }
+
+    if (userEmail) {
+        userEmail.textContent = email;
+    }
+
+    if (userRole) {
+        userRole.textContent = role;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    if (document.body.classList.contains("dashboard-page")) {
+        loadDashboardUser();
+        loadDashboardStats();
+        loadDashboardPosts();
+    }
+});
+
+
+/* =========================================
+   LOAD DASHBOARD STATISTICS
+========================================= */
+
+async function loadDashboardStats() {
+    const storedUser = localStorage.getItem("loggedInUser");
+
+    if (!storedUser) return;
+
+    let user;
+
+    try {
+        user = JSON.parse(storedUser);
+    } catch (error) {
+        console.error("Invalid logged-in user data:", error);
+        return;
+    }
+
+    try {
+        const blogsResponse = await fetch(
+            "http://localhost:8080/api/blogs/my/" +
+            encodeURIComponent(user.name)
+        );
+
+        if (!blogsResponse.ok) {
+            throw new Error("Unable to fetch your blogs");
+        }
+
+        const blogs = await blogsResponse.json();
+
+        // Count total, published, and draft posts
+        const totalPosts = blogs.length;
+
+        const publishedPosts = blogs.filter(blog =>
+            !blog.status ||
+            blog.status.toUpperCase() === "PUBLISHED"
+        ).length;
+
+        const draftPosts = blogs.filter(blog =>
+            blog.status &&
+            blog.status.toUpperCase() === "DRAFT"
+        ).length;
+
+        const totalPostsElement =
+            document.getElementById("totalPostsCount");
+
+        const publishedElement =
+            document.getElementById("publishedPostsCount");
+
+        const draftsElement =
+            document.getElementById("draftPostsCount");
+
+        if (totalPostsElement) {
+            totalPostsElement.textContent = totalPosts;
+        }
+
+        if (publishedElement) {
+            publishedElement.textContent = publishedPosts;
+        }
+
+        if (draftsElement) {
+            draftsElement.textContent = draftPosts;
+        }
+
+        // Count likes and comments on your posts
+        let totalLikes = 0;
+        let totalComments = 0;
+
+        await Promise.all(blogs.map(async blog => {
+            const [likesResponse, commentsResponse] =
+                await Promise.all([
+                    fetch(
+                        "http://localhost:8080/api/likes/blog/" +
+                        blog.id + "/count"
+                    ),
+                    fetch(
+                        "http://localhost:8080/api/comments/blog/" +
+                        blog.id
+                    )
+                ]);
+
+            if (!likesResponse.ok || !commentsResponse.ok) {
+                throw new Error(
+                    "Unable to load statistics for blog " + blog.id
+                );
+            }
+
+            const likes = await likesResponse.json();
+            const comments = await commentsResponse.json();
+
+            totalLikes += Number(likes);
+            totalComments += comments.length;
+        }));
+
+        const likesElement =
+            document.getElementById("totalLikesCount");
+
+        const commentsElement =
+            document.getElementById("totalCommentsCount");
+
+        if (likesElement) {
+            likesElement.textContent = totalLikes;
+        }
+
+        if (commentsElement) {
+            commentsElement.textContent = totalComments;
+        }
+
+    } catch (error) {
+        console.error("Dashboard statistics error:", error);
+    }
+}
+
+/* =========================================
+   SAVE BLOG AS DRAFT
+========================================= */
+
+async function saveDraft() {
+    const title = document.getElementById("postTitle").value.trim();
+    const category = document.getElementById("postCategory").value;
+    const content = document.getElementById("postContent").innerText.trim();
+
+    const imageInput = document.getElementById("coverImage");
+    const imageFile = imageInput ? imageInput.files[0] : null;
+
+    const storedUser = localStorage.getItem("loggedInUser");
+
+    if (!storedUser) {
+        alert("Please login before saving a draft.");
+        window.location.href = "login.html";
+        return;
+    }
+
+    let user;
+
+    try {
+        user = JSON.parse(storedUser);
+    } catch (error) {
+        alert("Your login session is invalid. Please login again.");
+        window.location.href = "login.html";
+        return;
+    }
+
+    if (!title) {
+        alert("Please enter a blog title.");
+        return;
+    }
+
+    if (!category) {
+        alert("Please select a category.");
+        return;
+    }
+
+    if (!content) {
+        alert("Please write some content.");
+        return;
+    }
+
+    try {
+        let imageUrl = "";
+
+        if (imageFile) {
+            const formData = new FormData();
+            formData.append("file", imageFile);
+
+            const uploadResponse = await fetch(
+                "http://localhost:8080/api/upload",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+            if (!uploadResponse.ok) {
+                throw new Error("Image upload failed");
+            }
+
+            imageUrl = await uploadResponse.text();
+        }
+
+        const blog = {
+            title: title,
+            content: content,
+            imageUrl: imageUrl,
+            category: category,
+            author: user.name,
+            status: "DRAFT"
+        };
+
+        const response = await fetch(
+            "http://localhost:8080/api/blogs",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(blog)
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to save draft");
+        }
+
+        const savedBlog = await response.json();
+        console.log("Draft saved:", savedBlog);
+
+        alert("Your draft has been saved successfully!");
+
+        window.location.href = "dashboard.html";
+
+    } catch (error) {
+        console.error("Save draft error:", error);
+        alert("Unable to save your draft. Make sure Spring Boot is running.");
+    }
+}
+
+/* =========================================
+   LOAD DASHBOARD POSTS
+========================================= */
+
+async function loadDashboardPosts() {
+    const postsContainer = document.getElementById("dashboardPosts");
+
+    if (!postsContainer) {
+        return;
+    }
+
+    const storedUser = localStorage.getItem("loggedInUser");
+
+    if (!storedUser) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    let user;
+
+    try {
+        user = JSON.parse(storedUser);
+    } catch (error) {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "login.html";
+        return;
+    }
+
+    postsContainer.innerHTML = "<p>Loading your posts...</p>";
+
+    try {
+        const response = await fetch(
+            "http://localhost:8080/api/blogs/my/" +
+            encodeURIComponent(user.name)
+        );
+
+        if (!response.ok) {
+            throw new Error("Unable to load your posts.");
+        }
+
+        dashboardBlogs = await response.json();
+        const blogs = dashboardBlogs;
+
+        postsContainer.innerHTML = "";
+
+        if (blogs.length === 0) {
+            postsContainer.innerHTML = `
+                <div class="dashboard-empty">
+                    <h3>No posts yet</h3>
+                    <p>Your stories will appear here after you create them.</p>
+                    <a href="create-post.html" class="create-post-btn">
+                        Create Your First Post
+                    </a>
+                </div>
+            `;
+            return;
+        }
+
+        blogs.forEach(function (blog) {
+            const status =
+                (blog.status || "PUBLISHED").toUpperCase();
+
+            const card = document.createElement("article");
+            card.className = "dashboard-post";
+            card.setAttribute("data-status", status);
+
+            const details = document.createElement("div");
+            details.className = "dashboard-post-details";
+
+            const category = document.createElement("span");
+            category.className = "dashboard-post-category";
+            category.textContent = blog.category || "General";
+
+            const title = document.createElement("h3");
+            title.textContent = blog.title || "Untitled Blog";
+
+            const content = document.createElement("p");
+            const fullContent = blog.content || "";
+            content.textContent =
+                fullContent.length > 160
+                    ? fullContent.substring(0, 160) + "..."
+                    : fullContent;
+
+            const statusBadge = document.createElement("span");
+            statusBadge.className = "dashboard-post-status";
+            statusBadge.textContent = status;
+
+            const actions = document.createElement("div");
+            actions.className = "dashboard-post-actions";
+
+            const editButton = document.createElement("button");
+            editButton.type = "button";
+            editButton.textContent = "Edit";
+            editButton.addEventListener("click", function () {
+                window.location.href =
+                    "edit-blog.html?id=" + encodeURIComponent(blog.id);
+            });
+
+            const deleteButton = document.createElement("button");
+            deleteButton.type = "button";
+            deleteButton.textContent = "Delete";
+            deleteButton.addEventListener("click", function () {
+                deleteDashboardBlog(blog.id);
+            });
+
+            actions.append(editButton, deleteButton);
+            details.append(category, title, content, statusBadge, actions);
+            card.appendChild(details);
+            postsContainer.appendChild(card);
+        });
+
+        const activeTab =
+            document.querySelector(".dashboard-tab.active");
+
+        const activeType = activeTab
+            ? activeTab.textContent.trim().toLowerCase()
+            : "all";
+
+        showDashboardPosts(
+            activeType === "drafts" ? "draft" :
+            activeType === "published" ? "published" : "all",
+            activeTab
+        );
+
+    } catch (error) {
+        console.error("Dashboard posts error:", error);
+
+        postsContainer.innerHTML = `
+            <p class="dashboard-error">
+                Unable to load your posts. Please check that Spring Boot is running.
+            </p>
+        `;
+    }
+}
+
+
+/* =========================================
+   DELETE DASHBOARD POST
+========================================= */
+
+async function deleteDashboardBlog(blogId) {
+    const confirmed = confirm(
+        "Are you sure you want to delete this blog?"
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            "http://localhost:8080/api/blogs/" + blogId,
+            {
+                method: "DELETE"
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to delete blog.");
+        }
+
+        alert("Blog deleted successfully.");
+
+        await loadDashboardPosts();
+        await loadDashboardStats();
+
+    } catch (error) {
+        console.error("Dashboard delete error:", error);
+        alert("Unable to delete this blog.");
+    }
+}
+
+/* =========================================
+   LOAD PROFILE PAGE
+========================================= */
+
+
+/* =========================================
+   LOAD PROFILE PAGE
+========================================= */
+
+async function loadProfilePage() {
+    const storedUser = localStorage.getItem("loggedInUser");
+
+    if (!storedUser) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    let currentUser;
+
+    try {
+        currentUser = JSON.parse(storedUser);
+    } catch (error) {
+        console.error("Invalid user data:", error);
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "login.html";
+        return;
+    }
+
+    if (!currentUser.id) {
+        alert("Your session does not contain a user ID. Please log in again.");
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "login.html";
+        return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const requestedId = params.get("id");
+
+    const targetUserId = requestedId
+        ? Number(requestedId)
+        : Number(currentUser.id);
+
+    if (!Number.isSafeInteger(targetUserId) || targetUserId <= 0) {
+        alert("Invalid profile ID.");
+        return;
+    }
+
+    const isOwnProfile =
+        Number(currentUser.id) === targetUserId;
+
+    profileTargetUserId = targetUserId;
+
+    const setText = (id, value) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+    };
+
+    try {
+        const response = await fetch(
+            `http://localhost:8080/api/users/${targetUserId}/profile`
+        );
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error("This user profile was not found.");
+            }
+
+            throw new Error("Unable to load this profile.");
+        }
+
+        const user = await response.json();
+
+        const name = user.name || "User";
+        const email = isOwnProfile
+            ? (currentUser.email || user.email || "Not available")
+            : "Hidden for privacy";
+        const username = user.username ||
+            name.toLowerCase().replace(/\s+/g, "");
+        const bio = user.bio || "Welcome to BlogSphere.";
+        const role = user.role || "USER";
+
+        setText("profileName", name);
+        setText("profileUsername", "@" + username);
+        setText("profileBio", bio);
+        setText("profileAboutBio", bio);
+        setText("profileEmail", email);
+        setText("profileRole", role);
+
+        const avatar = document.getElementById("profileAvatar");
+        if (avatar) {
+            avatar.textContent = name.charAt(0).toUpperCase();
+        }
+
+        const editButton =
+            document.getElementById("editProfileButton");
+        const followButton =
+            document.getElementById("followButton");
+
+        if (editButton) {
+            editButton.style.display = isOwnProfile
+                ? "inline-block"
+                : "none";
+        }
+
+        if (followButton) {
+            followButton.style.display = isOwnProfile
+                ? "none"
+                : "inline-block";
+        }
+
+        const editName = document.getElementById("editName");
+        const editUsername = document.getElementById("editUsername");
+        const editBio = document.getElementById("editBio");
+
+        if (isOwnProfile) {
+            if (editName) editName.value = name;
+            if (editUsername) editUsername.value = username;
+            if (editBio) editBio.value = bio;
+        }
+
+        await loadFollowCounts(targetUserId);
+
+        if (isOwnProfile) {
+            await loadFollowStatus(currentUser.id, targetUserId);
+        } else {
+            await loadFollowStatus(currentUser.id, targetUserId);
+        }
+
+        const postsContainer =
+            document.getElementById("profilePosts");
+
+        if (!postsContainer) return;
+
+        postsContainer.replaceChildren();
+
+        const loadingMessage = document.createElement("p");
+        loadingMessage.textContent = "Loading posts...";
+        postsContainer.appendChild(loadingMessage);
+
+        const postsResponse = await fetch(
+            "http://localhost:8080/api/blogs/my/" +
+            encodeURIComponent(name)
+        );
+
+        if (!postsResponse.ok) {
+            throw new Error("Unable to load profile posts.");
+        }
+
+        const blogs = await postsResponse.json();
+
+        const publishedBlogs = blogs.filter(blog =>
+            !blog.status ||
+            blog.status.toUpperCase() === "PUBLISHED"
+        );
+
+        setText("profilePostCount", publishedBlogs.length);
+        setText("profileAboutPostCount", publishedBlogs.length);
+
+        postsContainer.replaceChildren();
+
+        if (publishedBlogs.length === 0) {
+            const message = document.createElement("p");
+            message.textContent = isOwnProfile
+                ? "You haven't published any posts yet."
+                : "This user hasn't published any posts yet.";
+            postsContainer.appendChild(message);
+            return;
+        }
+
+        publishedBlogs.forEach(blog => {
+            const card = document.createElement("article");
+            card.className = "dashboard-post";
+
+            const title = document.createElement("h3");
+            title.textContent = blog.title || "Untitled";
+
+            const content = document.createElement("p");
+            content.textContent =
+                (blog.content || "").slice(0, 160);
+
+            const link = document.createElement("a");
+            link.href =
+                "post.html?id=" + encodeURIComponent(blog.id);
+            link.textContent = "Read post";
+
+            card.append(title, content, link);
+            postsContainer.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error("Profile loading error:", error);
+
+        const postsContainer =
+            document.getElementById("profilePosts");
+
+        if (postsContainer) {
+            postsContainer.replaceChildren();
+
+            const message = document.createElement("p");
+            message.textContent = error.message ||
+                "Unable to load this profile.";
+            postsContainer.appendChild(message);
+        }
+    }
+}
+
+
+/* =========================================
+   PROFILE FOLLOW SYSTEM
+========================================= */
+
+let profileTargetUserId = null;
+let profileIsFollowing = false;
+
+async function loadFollowCounts(userId) {
+    try {
+        const response = await fetch(
+            `http://localhost:8080/api/follows/${userId}/counts`
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to load follow counts");
+        }
+
+        const counts = await response.json();
+
+        const followersElement =
+            document.getElementById("profileFollowerCount");
+
+        const followingElement =
+            document.getElementById("profileFollowingCount");
+
+        if (followersElement) {
+            followersElement.textContent = counts.followers;
+        }
+
+        if (followingElement) {
+            followingElement.textContent = counts.following;
+        }
+
+    } catch (error) {
+        console.error("Follow counts error:", error);
+    }
+}
+
+async function toggleFollow() {
+    const storedUser = localStorage.getItem("loggedInUser");
+
+    if (!storedUser) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const user = JSON.parse(storedUser);
+
+    if (!user.id || !profileTargetUserId) {
+        alert("Unable to identify the users.");
+        return;
+    }
+
+    if (user.id === profileTargetUserId) {
+        alert("You cannot follow yourself.");
+        return;
+    }
+
+    const button = document.getElementById("followButton");
+
+    if (button) {
+        button.disabled = true;
+    }
+
+    try {
+        const method = profileIsFollowing ? "DELETE" : "POST";
+
+        const response = await fetch(
+            `http://localhost:8080/api/follows/${user.id}/${profileTargetUserId}`,
+            { method }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                result.error || "Unable to update follow status."
+            );
+        }
+
+        profileIsFollowing = !profileIsFollowing;
+
+        if (button) {
+            button.textContent = profileIsFollowing
+                ? "Unfollow"
+                : "Follow";
+        }
+
+        await loadFollowCounts(profileTargetUserId);
+
+        alert(result.message);
+
+    } catch (error) {
+        console.error("Follow action error:", error);
+        alert(error.message || "Unable to update follow status.");
+    } finally {
+        if (button) {
+            button.disabled = false;
+        }
+    }
+}
+
+async function loadFollowStatus(currentUserId, targetUserId) {
+    const followButton = document.getElementById("followButton");
+    const editButton = document.getElementById("editProfileButton");
+
+    if (!followButton || !editButton) {
+        return;
+    }
+
+    // Hide Follow and show Edit Profile for your own profile.
+    if (Number(currentUserId) === Number(targetUserId)) {
+        followButton.style.display = "none";
+        editButton.style.display = "inline-block";
+        return;
+    }
+
+    // Show Follow and hide Edit Profile for another user's profile.
+    editButton.style.display = "none";
+    followButton.style.display = "inline-block";
+    followButton.disabled = true;
+
+    try {
+        const response = await fetch(
+            `http://localhost:8080/api/follows/${currentUserId}/status/${targetUserId}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Unable to check follow status.");
+        }
+
+        const result = await response.json();
+
+        profileIsFollowing = result.isFollowing;
+
+        followButton.textContent = profileIsFollowing
+            ? "Unfollow"
+            : "Follow";
+
+    } catch (error) {
+        console.error("Follow status error:", error);
+        followButton.textContent = "Follow";
+    } finally {
+        followButton.disabled = false;
+    }
+}
+
+async function showFollowList(type) {
+    const section = document.getElementById("followListSection");
+    const title = document.getElementById("followListTitle");
+    const content = document.getElementById("followListContent");
+
+    if (!section || !title || !content || !profileTargetUserId) {
+        return;
+    }
+
+    section.style.display = "block";
+    title.textContent = type === "followers" ? "Followers" : "Following";
+    content.textContent = "Loading...";
+
+    try {
+        const response = await fetch(
+            `http://localhost:8080/api/follows/${profileTargetUserId}/${type}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Unable to load the list.");
+        }
+
+        const users = await response.json();
+        content.replaceChildren();
+
+        if (users.length === 0) {
+            content.textContent = type === "followers"
+                ? "No followers yet."
+                : "Not following anyone yet.";
+            return;
+        }
+
+        users.forEach(user => {
+            const row = document.createElement("div");
+            row.className = "follow-list-user";
+
+            const name = document.createElement("span");
+            name.textContent = user.name;
+
+            const link = document.createElement("a");
+            link.href = `profile.html?id=${user.id}`;
+            link.textContent = "View Profile";
+
+            row.append(name, link);
+            content.appendChild(row);
+        });
+    } catch (error) {
+        console.error(error);
+        content.textContent = "Unable to load users. Check that the backend is running.";
+    }
+}
+
+function closeFollowList() {
+    const section = document.getElementById("followListSection");
+    if (section) {
+        section.style.display = "none";
+    }
+}
