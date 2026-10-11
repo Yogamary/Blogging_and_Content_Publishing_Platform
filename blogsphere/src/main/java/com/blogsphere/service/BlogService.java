@@ -1,3 +1,4 @@
+
 package com.blogsphere.service;
 
 import com.blogsphere.entity.Blog;
@@ -16,31 +17,39 @@ public class BlogService {
         this.blogRepository = blogRepository;
     }
 
-    // Create a new blog
+    // Create a new blog or draft
     public Blog createBlog(Blog blog) {
+        if (blog.getStatus() == null || blog.getStatus().isBlank()) {
+            blog.setStatus("PUBLISHED");
+        }
+
+        validateStatus(blog.getStatus());
+
         return blogRepository.save(blog);
     }
 
-    // Get all blogs
+    // Get published blogs for Explore
     public List<Blog> getAllBlogs() {
-        return blogRepository.findAll();
+        return blogRepository.findAll()
+                .stream()
+                .filter(blog ->
+                        blog.getStatus() == null
+                        || blog.getStatus().equalsIgnoreCase("PUBLISHED"))
+                .toList();
     }
 
-
-// Get blogs created by an author
-public List<Blog> getBlogsByAuthor(String author) {
-    return blogRepository.findByAuthor(author);
-}
-
+    // Get all blogs, including drafts, for one author
+    public List<Blog> getBlogsByAuthor(String author) {
+        return blogRepository.findByAuthor(author);
+    }
 
     // Get one blog by ID
     public Optional<Blog> getBlogById(Long id) {
         return blogRepository.findById(id);
     }
 
-    // Update a blog
+    // Update an existing blog
     public Blog updateBlog(Long id, Blog blogDetails) {
-
         Optional<Blog> existingBlog =
                 blogRepository.findById(id);
 
@@ -54,14 +63,18 @@ public List<Blog> getBlogsByAuthor(String author) {
         blog.setContent(blogDetails.getContent());
         blog.setImageUrl(blogDetails.getImageUrl());
         blog.setCategory(blogDetails.getCategory());
-    
+
+        if (blogDetails.getStatus() != null
+                && !blogDetails.getStatus().isBlank()) {
+            validateStatus(blogDetails.getStatus());
+            blog.setStatus(blogDetails.getStatus());
+        }
 
         return blogRepository.save(blog);
     }
 
     // Delete a blog
     public void deleteBlog(Long id) {
-
         if (!blogRepository.existsById(id)) {
             throw new RuntimeException("Blog not found");
         }
@@ -69,5 +82,12 @@ public List<Blog> getBlogsByAuthor(String author) {
         blogRepository.deleteById(id);
     }
 
-
+    // Allow only supported statuses
+    private void validateStatus(String status) {
+        if (!"PUBLISHED".equalsIgnoreCase(status)
+                && !"DRAFT".equalsIgnoreCase(status)) {
+            throw new IllegalArgumentException(
+                    "Status must be PUBLISHED or DRAFT");
+        }
+    }
 }

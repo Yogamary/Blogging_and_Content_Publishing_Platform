@@ -1,3 +1,4 @@
+
 package com.blogsphere.entity;
 
 import jakarta.persistence.*;
@@ -20,6 +21,9 @@ public class Blog {
     private String category;
 
     private String author;
+
+    @Column(nullable = true)
+    private String status = "PUBLISHED";
 
     public Blog() {
     }
@@ -70,5 +74,17 @@ public class Blog {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        if (status == null || status.isBlank()) {
+            this.status = "PUBLISHED";
+        } else {
+            this.status = status.trim().toUpperCase();
+        }
     }
 }
