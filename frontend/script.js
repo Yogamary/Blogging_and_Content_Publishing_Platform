@@ -1,40 +1,23 @@
-/* =========================================
-   EXPLORE PAGE
-========================================= */
-
-
 /* SEARCH BLOGS */
-
 // ================= SEARCH BLOGS =================
-
 function searchBlogs() {
-
     const searchInput = document.getElementById("blogSearch");
     const blogGrid = document.getElementById("blogGrid");
     const noResults = document.getElementById("noResults");
-
     if (!searchInput || !blogGrid) return;
-
     const searchText = searchInput.value.toLowerCase().trim();
-
     // IMPORTANT: your cards are .explore-card
     const cards = blogGrid.querySelectorAll(".explore-card");
-
     let found = 0;
-
     cards.forEach(function(card) {
-
         const text = card.textContent.toLowerCase();
-
         if (text.includes(searchText)) {
             card.style.display = "";
             found++;
         } else {
             card.style.display = "none";
         }
-
     });
-
     if (noResults) {
         noResults.style.display = found === 0 ? "block" : "none";
     }
@@ -43,290 +26,167 @@ function searchBlogs() {
 document.addEventListener(
     "DOMContentLoaded",
     function() {
-
         const searchInput =
             document.getElementById("blogSearch");
-
         if (searchInput) {
-
             searchInput.addEventListener(
                 "keypress",
                 function(event) {
-
                     if (event.key === "Enter") {
-
                         searchBlogs();
-
                     }
-
                 }
             );
-
         }
-
     }
 );
-
-
 /* =========================================
    FILTER BLOGS
 ========================================= */
-
 function filterBlogs(category, button) {
-
     const cards =
         document.querySelectorAll(".explore-card");
-
     const buttons =
         document.querySelectorAll(".filter-btn");
-
     const noResults =
         document.getElementById("noResults");
-
     let found = false;
-
-
     /* Remove active */
-
     buttons.forEach(function(btn) {
-
         btn.classList.remove("active");
-
     });
-
-
     /* Add active */
-
     if (button) {
-
         button.classList.add("active");
-
     }
-
-
     /* Filter cards */
-
     cards.forEach(function(card) {
-
         const cardCategory =
             card.dataset.category;
-
-
         if (
             category === "all" ||
             cardCategory === category
         ) {
-
             card.style.display = "block";
-
             found = true;
-
         } else {
-
             card.style.display = "none";
-
         }
-
     });
-
-
     if (noResults) {
-
         if (found) {
-
             noResults.style.display = "none";
-
         } else {
-
             noResults.style.display = "block";
-
         }
-
     }
-
 }
-
-
 /* =========================================
    LOGIN
 ========================================= */
-
-
 async function loginUser() {
-
     const email =
         document.getElementById("email").value.trim();
-
     const password =
         document.getElementById("password").value.trim();
-
-
     if (email === "" || password === "") {
-
         alert("Please enter email and password.");
-
         return;
     }
-
     try {
-
         const response =
             await fetch(
                 "http://localhost:8080/api/users/login",
                 {
                     method: "POST",
-
                     headers: {
                         "Content-Type": "application/json"
                     },
-
                     body: JSON.stringify({
                         email: email,
                         password: password
                     })
                 }
             );
-
-
         /* Read the response as text */
-
         const data =
             await response.text();
-
         /* Login failed */
-
         if (!response.ok) {
-
             alert(
                 data ||
                 "Invalid email or password."
             );
-
             return;
         }
-
-
         /* Convert successful JSON response */
-
         const user =
             JSON.parse(data);
-
-
         console.log(
             "Login successful:",
             user
         );
-
-
         /* Store logged-in user */
-
         localStorage.setItem(
             "loggedInUser",
             JSON.stringify(user)
         );
-
-
         alert("Login successful! 🎉");
-
-
         /* Go to home page */
-
         window.location.href =
             "index.html";
-
-
     } catch (error) {
-
         console.error(
             "Login error:",
             error
         );
-
-
         alert(
             "Unable to connect to the server. Make sure Spring Boot is running."
         );
     }
-
 }
-
-
-
-
 /* =========================================
    REGISTER USER
 ========================================= */
-
-
 async function registerUser() {
-
     const name =
         document.getElementById("fullname").value.trim();
-
     const email =
         document.getElementById("register-email").value.trim();
-
     const password =
         document.getElementById("register-password").value;
-
     const confirmPassword =
         document.getElementById("confirm-password").value;
-
-
     /* Check name */
-
     if (name === "") {
-
         alert("Please enter your full name.");
-
         return;
     }
-
-
     /* Check email */
-
     if (email === "") {
-
         alert("Please enter your email address.");
-
         return;
     }
-
-
     /* Check password */
-
     if (password === "") {
-
         alert("Please create a password.");
-
         return;
     }
-
-
     /* Check password confirmation */
-
     if (password !== confirmPassword) {
-
         alert("Passwords do not match.");
-
         return;
     }
-
-
     /* Send data to Spring Boot */
-
     try {
-
         const response =
             await fetch(
                 "http://localhost:8080/api/users/register",
                 {
                     method: "POST",
-
                     headers: {
                         "Content-Type": "application/json"
                     },
-
                     body: JSON.stringify({
                         name: name,
                         email: email,
@@ -335,164 +195,95 @@ async function registerUser() {
                     })
                 }
             );
-
-
         /* Read backend response as text */
-
         const data =
             await response.text();
-
-
         /* Registration successful */
-
         if (response.ok) {
-
             alert(
                 "Account created successfully! 🎉"
             );
-
             window.location.href =
                 "login.html";
 
             return;
         }
-
-
         /* Registration failed */
-
         alert(
             data ||
             "Registration failed. Please try again."
         );
-
-
     } catch (error) {
-
         console.error(
             "Registration error:",
             error
         );
-
         alert(
             "Cannot connect to the BlogSphere server. Make sure Spring Boot is running."
         );
     }
-
 }
-
-
-
-
 /* =========================================
    BLOG POST
 ========================================= */
-
-
 /* LIKE POST */
-
 function likePost(button) {
-
     const count =
         button.querySelector("span");
-
     if (!count) {
         return;
     }
-
     let likes =
         parseInt(count.textContent);
-
-
     if (button.classList.contains("liked")) {
-
         likes--;
-
         button.classList.remove("liked");
-
         button.innerHTML =
             "♡ <span>" + likes + "</span>";
-
     } else {
-
         likes++;
-
         button.classList.add("liked");
-
         button.innerHTML =
             "♥ <span>" + likes + "</span>";
-
     }
-
 }
-
-
 /* SHARE POST */
-
 function sharePost() {
-
     const url =
         window.location.href;
-
     if (navigator.share) {
-
         navigator.share({
             title: document.title,
             url: url
         });
-
     } else {
-
         navigator.clipboard.writeText(url);
-
         alert("Blog link copied!");
-
     }
-
 }
-
-
 /* =========================================
    CREATE POST
 ========================================= */
-
-
 /* COVER IMAGE PREVIEW */
-
 function previewCoverImage(event) {
-
     const file =
         event.target.files[0];
-
     const preview =
         document.getElementById("coverPreview");
-
-
     if (!file || !preview) {
         return;
     }
-
-
     const reader =
         new FileReader();
-
-
     reader.onload =
         function(e) {
-
             preview.src =
                 e.target.result;
-
             preview.style.display =
                 "block";
-
         };
-
-
     reader.readAsDataURL(file);
-
 }
-
-
 /* =========================================
    WORD COUNT
 ========================================= */
@@ -508,43 +299,29 @@ if (contentEditor) {
     );
 
 }
-
-
 function updateWordCount() {
 
     const content =
         document.getElementById("postContent");
-
-
     if (!content) {
         return;
     }
 
-
     const text =
         content.innerText.trim();
 
-
     if (text === "") {
-
         updateCountDisplay(0);
-
         return;
-
     }
-
-
     const words =
         text
             .split(/\s+/)
             .filter(Boolean)
             .length;
-
-
     updateCountDisplay(words);
 
 }
-
 
 function updateCountDisplay(words) {
 
@@ -557,32 +334,24 @@ function updateCountDisplay(words) {
     const readingTime =
         document.getElementById("readingTime");
 
-
     if (wordCount) {
-
         wordCount.textContent =
             words +
             (words === 1 ? " word" : " words");
 
     }
 
-
     if (sidebarWordCount) {
-
         sidebarWordCount.textContent =
             words;
-
     }
 
-
     if (readingTime) {
-
         const minutes =
             Math.max(
                 1,
                 Math.ceil(words / 200)
             );
-
         readingTime.textContent =
             minutes + " min read";
 
@@ -590,13 +359,10 @@ function updateCountDisplay(words) {
 
 }
 
-
 /* =========================================
    TEXT FORMATTING
 ========================================= */
-
 function formatText(command) {
-
     document.execCommand(
         command,
         false,
@@ -605,22 +371,17 @@ function formatText(command) {
 
 }
 
-
 /* =========================================
    SAVE DRAFT
 ========================================= */
 
 function saveDraft() {
-
     const title =
         document.getElementById("postTitle").value.trim();
-
     const content =
         document.getElementById("postContent").innerText.trim();
 
-
     if (title === "" && content === "") {
-
         alert(
             "Write something before saving your draft."
         );
@@ -628,14 +389,11 @@ function saveDraft() {
         return;
 
     }
-
-
     const saveStatus =
         document.getElementById("saveStatus");
 
     const draftStatus =
         document.getElementById("draftStatus");
-
 
     if (saveStatus) {
 
@@ -647,26 +405,20 @@ function saveDraft() {
 
     }
 
-
     if (draftStatus) {
-
         draftStatus.textContent =
             "Saved";
 
     }
 
-
     alert(
         "Your blog has been saved as a draft."
     );
-
 }
-
 
 /* =========================================
    PUBLISH POST
 ========================================= */
-
 async function publishPost() {
 
     const title =
@@ -684,7 +436,6 @@ async function publishPost() {
 
     const imageFile =
         imageInput ? imageInput.files[0] : null;
-
 
     // Validate title
     if (title === "") {
@@ -704,13 +455,10 @@ async function publishPost() {
         return;
     }
 
-
     // Get logged-in user
     const storedUser =
         localStorage.getItem("loggedInUser");
-
     if (!storedUser) {
-
         alert(
             "Please login before publishing a blog."
         );
@@ -721,17 +469,12 @@ async function publishPost() {
         return;
     }
 
-
     const user =
         JSON.parse(storedUser);
-
-
     try {
-
         // =====================================
         // STEP 1: Upload image
         // =====================================
-
         let imageUrl = "";
 
         if (imageFile) {
@@ -744,7 +487,6 @@ async function publishPost() {
                 imageFile
             );
 
-
             const uploadResponse =
                 await fetch(
                     "http://localhost:8080/api/upload",
@@ -754,19 +496,15 @@ async function publishPost() {
                     }
                 );
 
-
             if (!uploadResponse.ok) {
-
                 throw new Error(
                     "Image upload failed"
                 );
 
             }
 
-
             imageUrl =
                 await uploadResponse.text();
-
 
             console.log(
                 "Image uploaded:",
@@ -774,11 +512,9 @@ async function publishPost() {
             );
         }
 
-
         // =====================================
         // STEP 2: Create blog object
         // =====================================
-
         const blog = {
 
             title: title,
@@ -793,7 +529,6 @@ async function publishPost() {
 
         };
 
-
         // =====================================
         // STEP 3: Save blog in database
         // =====================================
@@ -803,41 +538,33 @@ async function publishPost() {
                 "http://localhost:8080/api/blogs",
                 {
                     method: "POST",
-
                     headers: {
                         "Content-Type":
                             "application/json"
                     },
-
                     body:
                         JSON.stringify(blog)
                 }
             );
 
-
         if (!response.ok) {
-
             throw new Error(
                 "Failed to publish blog"
             );
 
         }
 
-
         const savedBlog =
             await response.json();
-
 
         console.log(
             "Blog published:",
             savedBlog
         );
 
-
         alert(
             "Blog published successfully! 🎉"
         );
-
 
         // =====================================
         // STEP 4: Clear form
@@ -847,16 +574,13 @@ async function publishPost() {
             "postTitle"
         ).value = "";
 
-
         document.getElementById(
             "postCategory"
         ).value = "";
 
-
         document.getElementById(
             "postContent"
         ).innerText = "";
-
 
         const postTags =
             document.getElementById(
@@ -864,35 +588,24 @@ async function publishPost() {
             );
 
         if (postTags) {
-
             postTags.value = "";
-
         }
-
 
         // Clear image input
         if (imageInput) {
-
             imageInput.value = "";
-
         }
-
 
         // Clear image preview
         const coverPreview =
             document.getElementById(
                 "coverPreview"
             );
-
         if (coverPreview) {
-
             coverPreview.src = "";
-
             coverPreview.style.display =
                 "none";
-
         }
-
 
         // Update status
         const saveStatus =
@@ -905,14 +618,12 @@ async function publishPost() {
                 "draftStatus"
             );
 
-
         if (saveStatus) {
 
             saveStatus.textContent =
                 "● Published";
 
         }
-
 
         if (draftStatus) {
 
@@ -921,19 +632,15 @@ async function publishPost() {
 
         }
 
-
         // Go to explore page
         window.location.href =
             "explore.html";
 
-
     } catch (error) {
-
         console.error(
             "Publish error:",
             error
         );
-
 
         alert(
             "Unable to upload image or publish blog. Make sure Spring Boot is running."
@@ -943,11 +650,9 @@ async function publishPost() {
 
 }
 
-
 /* =========================================
    DASHBOARD
 ========================================= */
-
 /* =========================================
    DASHBOARD POSTS
 ========================================= */
@@ -1069,20 +774,16 @@ function showDashboardPosts(type, button) {
     renderDashboardPosts(type);
 }
 
-
 /* DELETE POST */
-
 function deleteDashboardPost(button) {
 
     const post =
         button.closest(".dashboard-post");
 
-
     const confirmed =
         confirm(
             "Are you sure you want to delete this post?"
         );
-
 
     if (confirmed && post) {
 
@@ -1096,7 +797,6 @@ function deleteDashboardPost(button) {
 
 }
 
-
 /* EDIT PROFILE */
 
 function editProfile() {
@@ -1107,11 +807,9 @@ function editProfile() {
 
 }
 
-
 /* =========================================
    PROFILE PAGE
 ========================================= */
-
 
 /* PROFILE TABS */
 
@@ -1126,13 +824,11 @@ function showProfileTab(type, button) {
     const about =
         document.getElementById("profileAbout");
 
-
     tabs.forEach(function(tab) {
 
         tab.classList.remove("active");
 
     });
-
 
     if (button) {
 
@@ -1140,11 +836,9 @@ function showProfileTab(type, button) {
 
     }
 
-
     if (!posts || !about) {
         return;
     }
-
 
     if (type === "posts") {
 
@@ -1167,15 +861,11 @@ function showProfileTab(type, button) {
     }
 
 }
-
-
 /* OPEN PROFILE EDITOR */
-
 function openProfileEditor() {
 
     const modal =
         document.getElementById("profileModal");
-
 
     if (modal) {
 
@@ -1186,14 +876,12 @@ function openProfileEditor() {
 
 }
 
-
 /* CLOSE PROFILE EDITOR */
 
 function closeProfileEditor() {
 
     const modal =
         document.getElementById("profileModal");
-
 
     if (modal) {
 
@@ -1203,7 +891,6 @@ function closeProfileEditor() {
     }
 
 }
-
 
 /* SAVE PROFILE */
 
@@ -1218,7 +905,6 @@ function saveProfile() {
     const bio =
         document.getElementById("editBio").value.trim();
 
-
     if (name === "") {
 
         alert(
@@ -1228,7 +914,6 @@ function saveProfile() {
         return;
 
     }
-
 
     const profileName =
         document.querySelector(
@@ -1250,14 +935,12 @@ function saveProfile() {
             ".profile-picture"
         );
 
-
     if (profileName) {
 
         profileName.textContent =
             name;
 
     }
-
 
     if (profileUsername) {
 
@@ -1266,14 +949,12 @@ function saveProfile() {
 
     }
 
-
     if (profileBio) {
 
         profileBio.textContent =
             bio;
 
     }
-
 
     if (profilePicture) {
 
@@ -1282,16 +963,13 @@ function saveProfile() {
 
     }
 
-
     closeProfileEditor();
-
 
     alert(
         "Profile updated successfully."
     );
 
 }
-
 
 /* LOGOUT */
 
@@ -1301,7 +979,6 @@ function logoutUser() {
         confirm(
             "Are you sure you want to logout?"
         );
-
 
     if (confirmed) {
 
@@ -1315,13 +992,9 @@ function logoutUser() {
     }
 
 }
-
-
 /* =========================================
    CATEGORIES PAGE
 ========================================= */
-
-
 /* SEARCH CATEGORIES */
 
 function searchCategories() {
@@ -1333,12 +1006,10 @@ function searchCategories() {
         return;
     }
 
-
     const input =
         searchElement.value
             .toLowerCase()
             .trim();
-
 
     const cards =
         document.querySelectorAll(".category-card");
@@ -1350,7 +1021,6 @@ function searchCategories() {
         document.getElementById("categoryCount");
 
     let visibleCount = 0;
-
 
     cards.forEach(function(card) {
 
@@ -1364,7 +1034,6 @@ function searchCategories() {
                 .querySelector("h3")
                 .textContent
                 .toLowerCase();
-
 
         if (
             category.includes(input) ||
@@ -1382,11 +1051,9 @@ function searchCategories() {
 
             card.style.display =
                 "none";
-
         }
 
     });
-
 
     if (noResult) {
 
@@ -1406,7 +1073,6 @@ function searchCategories() {
 
     }
 
-
     if (count) {
 
         count.textContent =
@@ -1415,31 +1081,22 @@ function searchCategories() {
     }
 
 }
-
-
 /* TOPIC FILTER */
-
 function filterCategory(category) {
 
     const input =
         document.getElementById("categorySearch");
-
-
     if (!input) {
         return;
     }
 
-
     input.value =
         category;
 
-
     searchCategories();
-
 
     const grid =
         document.getElementById("categoryGrid");
-
 
     if (grid) {
 
@@ -1451,11 +1108,9 @@ function filterCategory(category) {
 
 }
 
-
 /* =========================================
    ACCOUNT SETTINGS
 ========================================= */
-
 function showSettings(panelId, button) {
 
     const panels =
@@ -1471,24 +1126,20 @@ function showSettings(panelId, button) {
 
     });
 
-
     tabs.forEach(function(tab) {
 
         tab.classList.remove("active");
 
     });
 
-
     const selectedPanel =
         document.getElementById(panelId);
-
 
     if (selectedPanel) {
 
         selectedPanel.classList.add("active");
 
     }
-
 
     if (button) {
 
@@ -1497,7 +1148,6 @@ function showSettings(panelId, button) {
     }
 
 }
-
 
 /* SAVE SETTINGS */
 
@@ -1509,7 +1159,6 @@ function saveSettings() {
 
 }
 
-
 /* DELETE ACCOUNT */
 
 function confirmDeleteAccount() {
@@ -1518,7 +1167,6 @@ function confirmDeleteAccount() {
         confirm(
             "Are you sure you want to delete your account? This action cannot be undone."
         );
-
 
     if (confirmed) {
 
@@ -1530,14 +1178,12 @@ function confirmDeleteAccount() {
 
 }
 
-
 /* =========================================
    FORGOT PASSWORD
 ========================================= */
 
 const forgotForm =
     document.getElementById("forgotPasswordForm");
-
 
 if (forgotForm) {
 
@@ -1554,7 +1200,6 @@ if (forgotForm) {
                     .value
                     .trim();
 
-
             if (email === "") {
 
                 alert(
@@ -1565,7 +1210,6 @@ if (forgotForm) {
 
             }
 
-
             alert(
                 "Password reset link will be sent to your email."
             );
@@ -1574,12 +1218,9 @@ if (forgotForm) {
     );
 
 }
-
-
 /* =========================================
    LOAD BLOGS FROM SPRING BOOT
 ========================================= */
-
 async function loadBlogs() {
 
     const blogGrid =
@@ -1593,14 +1234,12 @@ async function loadBlogs() {
         return;
     }
 
-
     try {
 
         const response =
             await fetch(
                 "http://localhost:8080/api/blogs"
             );
-
 
         if (!response.ok) {
 
@@ -1610,14 +1249,11 @@ async function loadBlogs() {
 
         }
 
-
         const blogs =
             await response.json();
 
-
         blogGrid.innerHTML =
             "";
-
 
         if (blogs.length === 0) {
 
@@ -1632,14 +1268,12 @@ async function loadBlogs() {
 
         }
 
-
         if (noResults) {
 
             noResults.style.display =
                 "none";
 
         }
-
 
         // Get logged-in user
 
@@ -1652,14 +1286,12 @@ async function loadBlogs() {
         let loggedInUser =
             null;
 
-
         if (storedUser) {
 
             loggedInUser =
                 JSON.parse(storedUser);
 
         }
-
 
         // Create blog cards
 
@@ -1672,12 +1304,10 @@ async function loadBlogs() {
             card.className =
                 "explore-card";
 
-
             card.dataset.category =
                 blog.category
                     ? blog.category.toLowerCase()
                     : "";
-
 
             // Check if this blog belongs to logged-in user
 
@@ -1685,10 +1315,8 @@ async function loadBlogs() {
                 loggedInUser &&
                 blog.author === loggedInUser.name;
 
-
             let menuHTML =
                 "";
-
 
             if (isMyBlog) {
 
@@ -1728,7 +1356,6 @@ async function loadBlogs() {
 
             }
 
-
             card.innerHTML = `
 
                 <div class="explore-card-image">
@@ -1745,7 +1372,6 @@ async function loadBlogs() {
                     ${menuHTML}
 
                 </div>
-
 
                 <div class="explore-card-content">
 
@@ -5280,3 +4906,91 @@ function closeFollowList() {
         section.style.display = "none";
     }
 }
+
+/* =========================================
+   UPDATE NAVBAR BASED ON LOGIN STATUS
+========================================= */
+
+function updateNavbar() {
+    const navActions = document.getElementById("navActions");
+    const navLinks = document.getElementById("mainNavLinks");
+
+    if (!navActions || !navLinks) return;
+
+    let user = null;
+
+    try {
+        const storedUser = localStorage.getItem("loggedInUser");
+        user = storedUser ? JSON.parse(storedUser) : null;
+    } catch (error) {
+        localStorage.removeItem("loggedInUser");
+    }
+
+    const isLoggedIn = Boolean(user && user.id);
+    const role = (user?.role || "USER").toUpperCase();
+
+    // Show or hide links that require login
+    navLinks.querySelectorAll(".logged-in-link").forEach(link => {
+        link.style.display = isLoggedIn ? "" : "none";
+    });
+
+    // Remove an old Admin Dashboard link before recreating it
+    navLinks.querySelectorAll(".admin-dashboard-link").forEach(link => {
+        link.remove();
+    });
+
+    // Hide USER-only links for admins
+    navLinks.querySelectorAll(
+        'a[href="dashboard.html"], a[href="bookmarks.html"]'
+    ).forEach(link => {
+        if (isLoggedIn && role === "ADMIN") {
+            link.style.display = "none";
+        } else {
+            link.style.display = isLoggedIn ? "" : "none";
+        }
+    });
+
+    // Add Admin Dashboard for admins
+    if (isLoggedIn && role === "ADMIN") {
+        const adminLink = document.createElement("a");
+        adminLink.href = "admin.html";
+        adminLink.textContent = "Admin Dashboard";
+        adminLink.className = "admin-dashboard-link";
+        navLinks.appendChild(adminLink);
+    }
+
+    // Preserve the search button
+    const searchButton = navActions.querySelector(".search-btn");
+
+    navActions.querySelectorAll(
+        ".login-btn, .register-btn, .logout-btn"
+    ).forEach(element => element.remove());
+
+    if (!isLoggedIn) {
+        const login = document.createElement("a");
+        login.href = "login.html";
+        login.className = "login-btn";
+        login.textContent = "Login";
+
+        const register = document.createElement("a");
+        register.href = "register.html";
+        register.className = "register-btn";
+        register.textContent = "Register";
+
+        navActions.append(login, register);
+    } else {
+        const logout = document.createElement("button");
+        logout.type = "button";
+        logout.className = "logout-btn";
+        logout.textContent = "Logout";
+        logout.addEventListener("click", logoutUser);
+
+        navActions.appendChild(logout);
+    }
+
+    if (searchButton) {
+        navActions.prepend(searchButton);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", updateNavbar);
