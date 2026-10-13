@@ -1580,356 +1580,221 @@ function toggleBlogMenu(button) {
 
 }
 
-
 /* =========================================
    LOAD SINGLE BLOG POST
 ========================================= */
 
 async function loadBlogPost() {
-
-    const articleContent =
-        document.getElementById(
-            "articleContent"
-        );
-
-
-    // Make sure we are on post page
+    const articleContent = document.getElementById("articleContent");
 
     if (!articleContent) {
         return;
     }
 
-
-    // Get blog ID from URL
-
-    const urlParams =
-        new URLSearchParams(
-            window.location.search
-        );
-
-
-    const blogId =
-        urlParams.get("id");
-
-
-    // No ID
+    const urlParams = new URLSearchParams(window.location.search);
+    const blogId = urlParams.get("id");
 
     if (!blogId) {
+        document.getElementById("postTitle").textContent = "Blog not found";
+        document.getElementById("postIntro").textContent =
+            "No blog ID was provided.";
 
-        const titleElement =
-            document.getElementById(
-                "postTitle"
-            );
+        articleContent.textContent =
+            "Please open a blog from the Explore page.";
 
-        const introElement =
-            document.getElementById(
-                "postIntro"
-            );
-
-
-        if (titleElement) {
-
-            titleElement.textContent =
-                "Blog not found";
-
-        }
-
-
-        if (introElement) {
-
-            introElement.textContent =
-                "No blog ID was provided.";
-
-        }
-
-
-        articleContent.innerHTML =
-            "<p>Please open a blog from the Explore page.</p>";
-
-
+        renderTableOfContents([]);
         return;
-
     }
 
-
     try {
-
-        // Get blog from Spring Boot
-
-        const response =
-            await fetch(
-                "http://localhost:8080/api/blogs/" +
-                blogId
-            );
-
+        const response = await fetch(
+            "http://localhost:8080/api/blogs/" + encodeURIComponent(blogId)
+        );
 
         if (!response.ok) {
-
-            throw new Error(
-                "Blog not found"
-            );
-
+            throw new Error("Blog not found");
         }
 
+        const blog = await response.json();
 
-        const blog =
-            await response.json();
+        /* TITLE */
 
+        const title = blog.title || "Untitled Blog";
+        document.getElementById("postTitle").textContent = title;
 
-        console.log(
-            "Blog loaded:",
-            blog
-        );
+        /* CATEGORY */
 
+        document.getElementById("postCategory").textContent =
+            blog.category ? blog.category.toUpperCase() : "GENERAL";
 
-        /* =========================
-           TITLE
-        ========================= */
+        /* INTRO */
 
-        const titleElement =
-            document.getElementById(
-                "postTitle"
+        const content = blog.content || "No content available.";
+
+        document.getElementById("postIntro").textContent =
+            content.length > 150
+                ? content.substring(0, 150) + "..."
+                : content;
+
+        /* AUTHOR */
+
+        const authorElement = document.getElementById("postAuthor");
+        const authorLink = document.getElementById("postAuthorLink");
+        const authorAvatarElement =
+            document.getElementById("postAuthorAvatar");
+
+        const author = blog.author || "Unknown Author";
+
+        authorElement.textContent = author;
+        authorAvatarElement.textContent = author.charAt(0).toUpperCase();
+
+        authorLink.removeAttribute("href");
+        authorLink.style.cursor = "default";
+
+        /*
+         * This uses the existing users endpoint for now.
+         * We can replace it with a safer author-profile API later.
+         */
+
+        try {
+            const usersResponse = await fetch(
+                "http://localhost:8080/api/users"
             );
 
+            if (usersResponse.ok) {
+                const users = await usersResponse.json();
 
-        if (titleElement) {
+                const authorUser = users.find(user =>
+                    user.name &&
+                    user.name.toLowerCase() === author.toLowerCase()
+                );
 
-            titleElement.textContent =
-                blog.title ||
-                "Untitled Blog";
+                if (authorUser) {
+                    authorLink.href =
+                        "profile.html?id=" + encodeURIComponent(authorUser.id);
 
-        }
-
-
-        /* =========================
-           CATEGORY
-        ========================= */
-
-        const categoryElement =
-            document.getElementById(
-                "postCategory"
-            );
-
-
-        if (categoryElement) {
-
-            categoryElement.textContent =
-                blog.category
-                    ? blog.category.toUpperCase()
-                    : "GENERAL";
-
-        }
-
-
-        /* =========================
-           INTRO
-        ========================= */
-
-        const introElement =
-            document.getElementById(
-                "postIntro"
-            );
-
-
-        if (introElement) {
-
-            const content =
-                blog.content || "";
-
-
-            introElement.textContent =
-                content.length > 150
-                    ? content.substring(0, 150) + "..."
-                    : content;
-
-        }
-
-               
-/* =========================
-   AUTHOR
-========================= */
-
-const authorElement =
-    document.getElementById("postAuthor");
-
-const authorLink =
-    document.getElementById("postAuthorLink");
-
-const authorAvatarElement =
-    document.getElementById("postAuthorAvatar");
-
-const author = blog.author || "Unknown Author";
-
-if (authorElement) {
-    authorElement.textContent = author;
-}
-
-if (authorAvatarElement) {
-    authorAvatarElement.textContent =
-        author.charAt(0).toUpperCase();
-}
-
-if (authorLink) {
-    authorLink.removeAttribute("href");
-    authorLink.style.cursor = "default";
-
-    try {
-        const usersResponse = await fetch(
-            "http://localhost:8080/api/users"
-        );
-
-        if (usersResponse.ok) {
-            const users = await usersResponse.json();
-
-            const authorUser = users.find(user =>
-                user.name &&
-                user.name.toLowerCase() === author.toLowerCase()
-            );
-
-            if (authorUser) {
-                authorLink.href =
-                    "profile.html?id=" + authorUser.id;
-
-                authorLink.style.cursor = "pointer";
+                    authorLink.style.cursor = "pointer";
+                }
             }
-        }
-    } catch (error) {
-        console.error("Unable to find author profile:", error);
-    }
-}
-
-
-        /* =========================
-           META
-        ========================= */
-
-        const metaElement =
-            document.getElementById(
-                "postMeta"
-            );
-
-
-        if (metaElement) {
-
-            metaElement.textContent =
-                "Published on BlogSphere";
-
+        } catch (error) {
+            console.error("Unable to find author profile:", error);
         }
 
+        /* META */
 
-        /* =========================
-           IMAGE
-        ========================= */
+        document.getElementById("postMeta").textContent =
+            "Published on BlogSphere";
 
-        const imageElement =
-            document.getElementById(
-                "postImage"
-            );
+        /* FEATURED IMAGE */
 
+        const imageElement = document.getElementById("postImage");
 
-        if (imageElement) {
+        if (blog.imageUrl && blog.imageUrl.trim() !== "") {
+            imageElement.src = blog.imageUrl;
+            imageElement.alt = title;
+            imageElement.style.display = "block";
+        } else {
+            imageElement.removeAttribute("src");
+            imageElement.style.display = "none";
+        }
 
-            if (
-                blog.imageUrl &&
-                blog.imageUrl.trim() !== ""
-            ) {
+        /* ARTICLE CONTENT AND TABLE OF CONTENTS */
 
-                imageElement.src =
-                    blog.imageUrl;
+        const headings = [];
 
-                imageElement.style.display =
-                    "block";
+        articleContent.replaceChildren();
 
+        /*
+         * Treat lines beginning with #, ##, or ### as headings.
+         * Other lines become paragraphs.
+         * Plain text blog content will continue to display normally.
+         */
+
+        content.split(/\r?\n/).forEach(line => {
+            const trimmedLine = line.trim();
+
+            if (!trimmedLine) {
+                return;
+            }
+
+            const headingMatch = trimmedLine.match(/^(#{1,3})\s+(.+)$/);
+
+            if (headingMatch) {
+                const level = headingMatch[1].length;
+                const headingText = headingMatch[2].trim();
+                const heading = document.createElement("h" + level);
+
+                heading.textContent = headingText;
+                heading.id = "article-section-" + (headings.length + 1);
+
+                articleContent.appendChild(heading);
+
+                headings.push({
+                    text: headingText,
+                    id: heading.id
+                });
             } else {
-
-                imageElement.style.display =
-                    "none";
-
+                const paragraph = document.createElement("p");
+                paragraph.textContent = trimmedLine;
+                articleContent.appendChild(paragraph);
             }
+        });
 
-        }
+        renderTableOfContents(headings);
 
+        /* PAGE TITLE */
 
-        /* =========================
-           BLOG CONTENT
-        ========================= */
-
-        if (articleContent) {
-
-            const content =
-                blog.content ||
-                "No content available.";
-
-
-            articleContent.innerHTML = `
-                <p>${content}</p>
-            `;
-
-        }
-
-
-        /* =========================
-           PAGE TITLE
-        ========================= */
-
-        document.title =
-            "BlogSphere | " +
-            (blog.title ||
-            "Blog Post");
-
+        document.title = "BlogSphere | " + title;
 
     } catch (error) {
+        console.error("Error loading blog:", error);
 
-        console.error(
-            "Error loading blog:",
-            error
-        );
+        document.getElementById("postTitle").textContent =
+            "Unable to load blog";
 
+        document.getElementById("postIntro").textContent =
+            "Something went wrong while loading this blog.";
 
-        const titleElement =
-            document.getElementById(
-                "postTitle"
-            );
+        articleContent.textContent =
+            "Unable to load this blog. Please make sure Spring Boot is running and the blog ID is correct.";
 
-
-        const introElement =
-            document.getElementById(
-                "postIntro"
-            );
-
-
-        if (titleElement) {
-
-            titleElement.textContent =
-                "Unable to load blog";
-
-        }
-
-
-        if (introElement) {
-
-            introElement.textContent =
-                "Something went wrong while loading this blog.";
-
-        }
-
-
-        if (articleContent) {
-
-            articleContent.innerHTML = `
-                <p>
-                    Unable to load this blog.
-                    Please make sure Spring Boot is running
-                    and the blog ID is correct.
-                </p>
-            `;
-
-        }
-
+        renderTableOfContents([]);
     }
-
 }
 
+/* =========================================
+   DYNAMIC TABLE OF CONTENTS
+========================================= */
+
+function renderTableOfContents(headings) {
+    const tocCard = document.querySelector(".toc-card");
+
+    if (!tocCard) {
+        return;
+    }
+
+    tocCard.replaceChildren();
+
+    // Hide the Table of Contents if no headings exist
+    if (!headings || headings.length === 0) {
+        tocCard.style.display = "none";
+        return;
+    }
+
+    tocCard.style.display = "";
+
+    const title = document.createElement("h3");
+    title.textContent = "In This Article";
+    tocCard.appendChild(title);
+
+    headings.forEach(item => {
+        const link = document.createElement("a");
+        link.href = "#" + item.id;
+        link.textContent = item.text;
+
+        tocCard.appendChild(link);
+    });
+}
 
 /* =========================================
    EDIT BLOG - LOAD
@@ -4992,5 +4857,132 @@ function updateNavbar() {
         navActions.prepend(searchButton);
     }
 }
-
 document.addEventListener("DOMContentLoaded", updateNavbar);
+/* =========================================
+   LOAD RELATED POSTS
+========================================= */
+
+async function loadRelatedPosts() {
+
+    const relatedGrid =
+        document.getElementById("relatedPostsGrid");
+
+    if (!relatedGrid) return;
+
+    const currentParams =
+        new URLSearchParams(window.location.search);
+
+    const currentBlogId =
+        currentParams.get("id");
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:8080/api/blogs"
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to load related posts");
+        }
+
+        const blogs = await response.json();
+
+        relatedGrid.replaceChildren();
+
+        const currentCategory =
+    document.getElementById("postCategory")
+        ?.textContent.trim().toLowerCase() || "";
+
+const otherBlogs = blogs.filter(blog =>
+    String(blog.id) !== String(currentBlogId)
+);
+
+const sameCategoryBlogs = otherBlogs.filter(blog =>
+    (blog.category || "").trim().toLowerCase() === currentCategory
+);
+
+const differentCategoryBlogs = otherBlogs.filter(blog =>
+    (blog.category || "").trim().toLowerCase() !== currentCategory
+);
+
+const relatedBlogs = [
+    ...sameCategoryBlogs,
+    ...differentCategoryBlogs
+].slice(0, 3);
+
+        if (relatedBlogs.length === 0) {
+
+            const message = document.createElement("p");
+            message.textContent = "No related posts available yet.";
+
+            relatedGrid.appendChild(message);
+            return;
+        }
+
+        relatedBlogs.forEach(blog => {
+
+            const card = document.createElement("article");
+            card.className = "related-card";
+
+            const imageContainer = document.createElement("div");
+            imageContainer.className = "related-image";
+
+            const image = document.createElement("img");
+            image.src = blog.imageUrl ||
+                "https://placehold.co/600x400?text=BlogSphere";
+            image.alt = blog.title || "Blog image";
+            image.loading = "lazy";
+            image.style.width = "100%";
+            image.style.height = "100%";
+            image.style.objectFit = "cover";
+
+            const category = document.createElement("span");
+            category.textContent = blog.category || "General";
+
+            imageContainer.append(image, category);
+
+            const content = document.createElement("div");
+            content.className = "related-content";
+
+            const title = document.createElement("h3");
+            title.textContent = blog.title || "Untitled Blog";
+
+            const description = document.createElement("p");
+            const text = (blog.content || "")
+                .replace(/[#*_`]/g, "")
+                .trim();
+
+            description.textContent =
+                text.length > 120
+                    ? text.substring(0, 120) + "..."
+                    : text;
+
+            const link = document.createElement("a");
+            link.href = "post.html?id=" +
+                encodeURIComponent(blog.id);
+            link.textContent = "Read Article →";
+
+            content.append(title, description, link);
+            card.append(imageContainer, content);
+
+            relatedGrid.appendChild(card);
+
+        });
+
+    } catch (error) {
+
+        console.error("Related posts error:", error);
+
+        relatedGrid.replaceChildren();
+
+        const message = document.createElement("p");
+        message.textContent =
+            "Unable to load related posts. Please try again later.";
+
+        relatedGrid.appendChild(message);
+
+    }
+}
+document.addEventListener("DOMContentLoaded", function () {
+    loadRelatedPosts();
+});

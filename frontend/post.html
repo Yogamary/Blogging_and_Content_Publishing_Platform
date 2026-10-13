@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -17,7 +15,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
-
 </head>
 
 <body class="post-page">
@@ -27,59 +24,38 @@
     <header class="navbar post-navbar">
 
         <div class="logo-area">
-
-            <div class="logo-icon">
-                ✎
-            </div>
+            <div class="logo-icon">✎</div>
 
             <div class="logo-text">
-
-                <h2>
-                    Blog<span>Sphere</span>
-                </h2>
-
-                <p>
-                    Share · Inspire · Grow
-                </p>
-
+                <h2>Blog<span>Sphere</span></h2>
+                <p>Share · Inspire · Grow</p>
             </div>
-
         </div>
 
-        <nav class="nav-links">
+        <nav class="nav-links" id="mainNavLinks">
+            <a href="index.html">Home</a>
+            <a href="explore.html" class="active">Explore</a>
+            <a href="categories.html">Categories</a>
+            <a href="about.html">About Us</a>
 
-            <a href="index.html">
-                Home
-            </a>
+            <a href="my-blogs.html"
+               class="logged-in-link"
+               style="display:none;">My Blogs</a>
 
-            <a href="explore.html" class="active">
-                Explore
-            </a>
-
-            <a href="categories.html">
-                Categories
-            </a>
-
-            <a href="about.html">
-                About Us
-            </a>
-
+            <a href="bookmarks.html"
+               class="logged-in-link"
+               style="display:none;">Bookmarks</a>
         </nav>
 
-        <div class="nav-actions">
-
-            <button class="search-btn">
-                
+        <div class="nav-actions" id="navActions">
+            <button
+                class="search-btn"
+                type="button"
+                aria-label="Search">
             </button>
 
-            <a href="login.html" class="login-btn">
-                Login
-            </a>
-
-            <a href="register.html" class="register-btn">
-                Register
-            </a>
-
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="register.html" class="register-btn">Register</a>
         </div>
 
     </header>
@@ -89,12 +65,9 @@
 
     <main class="post-main">
 
-        <!-- BACK -->
-
         <a href="explore.html" class="post-back">
             ← Back to Explore
         </a>
-
 
         <!-- CATEGORY -->
 
@@ -102,20 +75,17 @@
             Loading...
         </div>
 
-
         <!-- TITLE -->
 
         <h1 class="post-title" id="postTitle">
             Loading...
         </h1>
 
-
         <!-- INTRO -->
 
         <p class="post-intro" id="postIntro">
             Loading...
         </p>
-
 
         <!-- AUTHOR INFORMATION -->
 
@@ -128,67 +98,66 @@
                 </div>
 
                 <div>
+                    <a id="postAuthorLink"
+                       href="#"
+                       class="post-author-link">
+                        <strong id="postAuthor">Loading...</strong>
+                    </a>
 
-                    
-                    
-<a id="postAuthorLink" href="#" class="post-author-link">
-    <strong id="postAuthor">Loading...</strong>
-</a>
-
-
-                    <span id="postMeta">
-                        Loading...
-                    </span>
-
+                    <span id="postMeta">Loading...</span>
                 </div>
 
             </div>
 
-
             <!-- POST ACTIONS -->
 
-                   
             <div class="post-actions">
 
-              <!-- LIKE -->
+                <!-- LIKE -->
 
-             <button
-               class="post-action-btn"
-               id="likeButton"
-               onclick="likePost()">
+                <button
+                    class="post-action-btn"
+                    id="likeButton"
+                    type="button"
+                    onclick="likePost()">
 
-               ♡
-             <span id="likeCount">0</span>
+                    ♡
+                    <span id="likeCount">0</span>
+                </button>
 
-            </button>
+                <!-- BOOKMARK -->
 
+                <button
+                    class="post-action-btn"
+                    id="bookmarkButton"
+                    type="button"
+                    onclick="toggleBookmark()">
 
-            <!-- BOOKMARK -->
+                    🔖
+                    <span>Save</span>
+                </button>
 
-            <button
-              class="post-action-btn"
-              id="bookmarkButton"
-              onclick="toggleBookmark()">
+                <!-- SHARE -->
 
-             🔖
-            <span>Save</span>
+                <button
+                    class="post-action-btn"
+                    type="button"
+                    onclick="sharePost()">
 
-           </button>
+                    🔗 Share
+                </button>
 
+                <!-- REPORT -->
 
-         <!-- SHARE -->
+                <button
+                    class="post-action-btn"
+                    type="button"
+                    onclick="reportBlog()">
 
-    <button
-        class="post-action-btn"
-        onclick="sharePost()">
+                    🚩 Report
+                </button>
 
-        🔗
-        Share
-
-    </button>
-     <button class="post-action-btn" onclick="reportBlog()">🚩 Report</button>
-
-</div>
+            </div>
 
         </div>
 
@@ -196,12 +165,10 @@
         <!-- ================= FEATURED IMAGE ================= -->
 
         <div class="post-featured-image">
-
             <img
                 id="postImage"
                 src=""
-                alt="Blog image">
-
+                alt="Blog featured image">
         </div>
 
 
@@ -209,32 +176,25 @@
 
         <div class="post-layout">
 
-
-            <!-- ================= ARTICLE CONTENT ================= -->
+            <!-- ARTICLE CONTENT -->
 
             <article
                 class="article-content"
                 id="articleContent">
 
-                <p>
-                    Loading blog content...
-                </p>
+                <p>Loading blog content...</p>
 
             </article>
 
-
-            <!-- ================= SIDEBAR ================= -->
+            <!-- SIDEBAR -->
 
             <aside class="post-sidebar">
-
 
                 <!-- TABLE OF CONTENTS -->
 
                 <div class="toc-card">
 
-                    <h3>
-                        In This Article
-                    </h3>
+                    <h3>In This Article</h3>
 
                     <a href="#section1">
                         A New Era of Web Development
@@ -259,14 +219,11 @@
 
         <section class="comments-section">
 
-
             <!-- COMMENTS HEADING -->
 
             <div class="comments-heading">
 
-                <h2>
-                    Comments
-                </h2>
+                <h2>Comments</h2>
 
                 <span id="commentCount">
                     0 comments
@@ -274,24 +231,23 @@
 
             </div>
 
-
             <!-- COMMENT FORM -->
 
             <div class="comment-form">
 
-                <div class="comment-avatar">
-                    ?
-                </div>
+                <div class="comment-avatar">?</div>
 
                 <div class="comment-input-area">
 
                     <textarea
                         id="commentInput"
-                        placeholder="Share your thoughts..."></textarea>
+                        placeholder="Share your thoughts..."
+                        aria-label="Write a comment"></textarea>
 
                     <div class="comment-submit-row">
 
                         <button
+                            type="button"
                             onclick="addComment()">
 
                             Post Comment
@@ -304,8 +260,7 @@
 
             </div>
 
-
-            <!-- ================= EXISTING COMMENTS ================= -->
+            <!-- EXISTING COMMENTS -->
 
             <div id="commentsList">
 
@@ -316,139 +271,31 @@
             </div>
 
         </section>
+                        
+<!-- ================= RELATED POSTS ================= -->
 
+<section class="related-section" id="relatedPostsSection">
 
-        <!-- ================= RELATED POSTS ================= -->
+    <div class="section-heading">
 
-        <section class="related-section">
+        <div>
+            <span class="heading-line"></span>
+            <h2>You May Also Like</h2>
+        </div>
 
+        <a href="explore.html" class="view-all">
+            View All →
+        </a>
 
-            <div class="section-heading">
+    </div>
 
-                <div>
+    <div class="related-grid" id="relatedPostsGrid">
 
-                    <span class="heading-line"></span>
+        <p>Loading related posts...</p>
 
-                    <h2>
-                        You May Also Like
-                    </h2>
+    </div>
 
-                </div>
-
-
-                <a
-                    href="explore.html"
-                    class="view-all">
-
-                    View All →
-
-                </a>
-
-            </div>
-
-
-            <div class="related-grid">
-
-
-                <!-- RELATED POST 1 -->
-
-                <article class="related-card">
-
-                    <div class="related-image related-one">
-
-                        <span>
-                            Programming
-                        </span>
-
-                    </div>
-
-                    <div class="related-content">
-
-                        <h3>
-                            Getting Started with Java
-                        </h3>
-
-                        <p>
-                            Learn the basics of Java programming
-                            and object-oriented concepts.
-                        </p>
-
-                        <a href="post.html?id=2">
-                            Read Article →
-                        </a>
-
-                    </div>
-
-                </article>
-
-
-                <!-- RELATED POST 2 -->
-
-                <article class="related-card">
-
-                    <div class="related-image related-two">
-
-                        <span>
-                            Technology
-                        </span>
-
-                    </div>
-
-                    <div class="related-content">
-
-                        <h3>
-                            Understanding Artificial Intelligence
-                        </h3>
-
-                        <p>
-                            Learn how AI is changing the way
-                            we build technology.
-                        </p>
-
-                        <a href="post.html?id=3">
-                            Read Article →
-                        </a>
-
-                    </div>
-
-                </article>
-
-
-                <!-- RELATED POST 3 -->
-
-                <article class="related-card">
-
-                    <div class="related-image related-three">
-
-                        <span>
-                            Education
-                        </span>
-
-                    </div>
-
-                    <div class="related-content">
-
-                        <h3>
-                            How to Learn More Effectively
-                        </h3>
-
-                        <p>
-                            Simple strategies to improve
-                            your learning habits.
-                        </p>
-
-                        <a href="post.html?id=4">
-                            Read Article →
-                        </a>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-        </section>
-
+</section>
     </main>
 
 
@@ -458,13 +305,9 @@
 
         <div class="footer-logo">
 
-            <h2>
-                Blog<span>Sphere</span>
-            </h2>
+            <h2>Blog<span>Sphere</span></h2>
 
-            <p>
-                Share your story. Inspire the world.
-            </p>
+            <p>Share your story. Inspire the world.</p>
 
         </div>
 
@@ -480,5 +323,4 @@
     <script src="script.js"></script>
 
 </body>
-
 </html>
