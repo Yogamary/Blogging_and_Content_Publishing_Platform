@@ -20,16 +20,12 @@
 <body class="auth-page">
 
     <!-- BACKGROUND -->
-
     <div class="auth-background"></div>
 
-
     <!-- LOGIN CONTAINER -->
-
     <div class="auth-container">
 
         <!-- LEFT SIDE -->
-
         <div class="auth-intro">
 
             <div class="auth-logo">
@@ -41,12 +37,9 @@
                 </div>
             </div>
 
-
             <div class="auth-message">
 
-                <p class="auth-small">
-                    WELCOME BACK
-                </p>
+                <p class="auth-small">WELCOME BACK</p>
 
                 <h1>
                     Your ideas
@@ -64,9 +57,7 @@
 
         </div>
 
-
         <!-- RIGHT SIDE -->
-
         <div class="auth-form-area">
 
             <div class="auth-form">
@@ -74,110 +65,68 @@
                 <div class="mobile-logo">
                     <div class="auth-logo-icon">✎</div>
 
-                    <h2>
-                        Blog<span>Sphere</span>
-                    </h2>
+                    <h2>Blog<span>Sphere</span></h2>
                 </div>
-
 
                 <div class="form-heading">
-
                     <h2>Welcome Back!</h2>
-
-                    <p>
-                        Login to your BlogSphere account
-                    </p>
-
+                    <p>Login to your BlogSphere account</p>
                 </div>
 
+                <!-- LOGIN FORM -->
+                <form id="loginForm">
 
-                <!-- EMAIL -->
+                    <!-- EMAIL -->
+                    <div class="input-group">
+                        <label for="email">Email Address</label>
 
-                <div class="input-group">
-
-                    <label for="email">
-                        Email Address
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Enter your email address"
-                    >
-
-                </div>
-
-
-                <!-- PASSWORD -->
-
-                <div class="input-group">
-
-                    <div class="password-label">
-
-                        <label for="password">
-                            Password
-                        </label>
-
-
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email address"
+                            autocomplete="email"
+                            required>
                     </div>
 
-                    <input
-                        type="password"
-                        id="password"
-                        placeholder="Enter your password"
-                    >
+                    <!-- PASSWORD -->
+                    <div class="input-group">
+                        <label for="password">Password</label>
 
-                </div>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required>
+                    </div>
 
+                    <!-- LOGIN BUTTON -->
+                    <button
+                        type="submit"
+                        class="auth-submit">
+                        Login to Account
+                    </button>
 
-                <!-- REMEMBER -->
-
-
-
-                <!-- LOGIN BUTTON -->
-
-                <button
-                    type="button"
-                    class="auth-submit"
-                    onclick="loginUser()">
-
-                    Login to Account
-
-                </button>
-
+                </form>
 
                 <!-- DIVIDER -->
-
                 <div class="divider">
-
                     <span></span>
                     <p>OR</p>
                     <span></span>
-
                 </div>
 
-
                 <!-- REGISTER -->
-
                 <p class="account-text">
-
                     Don't have an account?
-
-                    <a href="register.html">
-                        Create Account
-                    </a>
-
+                    <a href="register.html">Create Account</a>
                 </p>
 
-
                 <!-- HOME -->
-
-                <a
-                    href="index.html"
-                    class="back-home">
-
+                <a href="index.html" class="back-home">
                     ← Back to Home
-
                 </a>
 
             </div>
@@ -186,7 +135,15 @@
 
     </div>
 
+    <!-- LOGIN FORM HANDLER -->
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            loginUser();
+        });
+    </script>
 
+    <!-- MAIN JAVASCRIPT -->
     <script src="script.js"></script>
 
 </body>
